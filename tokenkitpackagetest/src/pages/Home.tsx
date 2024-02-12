@@ -1,13 +1,26 @@
 
 import { ListTokenForm, TokensTable } from 'tokenkit'
 import SelectToken from '../components/SelectToken'
-import { Box, Code, Grid, Group, Stack, Text, TextInput, Title } from '@mantine/core'
+import { Box, Card, Code, Grid, Group, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { CodeHighlight, CodeHighlightTabs, InlineCodeHighlight } from '@mantine/code-highlight';
 import { DataTable } from 'mantine-datatable'
+import CustomBoxWithRadius from '../components/common/CustomBoxWithRadius';
 // import hljs from 'highlight.js/lib/core';
 // import shell from 'highlight.js/lib/languages/shell';
 // hljs.registerLanguage('shell', shell);
 // import 'highlight.js/styles/github.css';
+
+const stylingObject = `
+{
+    textColor: "white",
+    modalBackground: "#11052d",
+    headerFooterBackground: "rgba(0, 0, 0, 0.1)",
+    tokenBackgroundColor: 'rgba(0, 0, 0, 0.1)',
+    tokenHoverColor: 'rgba(0, 0, 0, 0.5)',
+    searchBackgroundColor: 'rgba(0, 0, 0, 0.5)',
+    searchBorderColor: '#3d1698'
+}
+`
 
 const usageCode = `
 import { Button } from "@mantine/core"
@@ -15,16 +28,38 @@ import { IconCurrencyDollar } from "@tabler/icons-react"
 import { useState } from "react"
 import { SelectTokenModal, IToken } from "starknet-tokenkit"
 
+// This can be any component, just a component to be wrapped with \`SelectTokenModal\` Component
+const MyCustomTokenPreviewComponent = (props: any) => {
+    const { token } = props
+    return (
+        <Box p={'sm'} style={{
+            background: 'rgba(0, 0, 0, 0.4)',
+            borderRadius: '10px',
+            cursor: 'pointer'
+        }}>
+            <Group gap={6} align="center">
+                <Avatar src={token?.icon}>
+                    {limitChars(token?.symbol ?? 'ST', 2, false)}
+                </Avatar>
+                {
+                    token ? (
+                        <Stack gap={2}>
+                            <Text size="sm" fw={500}>{token?.name}</Text>
+                            <Text size="xs">{token?.symbol}</Text>
+                        </Stack>
+                    ) : <Text>Select Token</Text>
+                }
+            </Group>
+        </Box>
+    )
+}
+
 const SelectToken = () => {
     const [token, setToken] = useState<IToken>()
     return (
         <div>
-            <SelectTokenModal selectedToken={token} callBackFunc={setToken}>
-                <Button radius={'md'} leftSection={<IconCurrencyDollar size={'18px'} />}>
-                    {
-                        token ? token?.name : 'Select Token'
-                    }
-                </Button>
+            <SelectTokenModal selectedToken={token} callBackFunc={setToken} themeObject={stylingObject}>
+                <MyCustomTokenPreviewComponent token={token} />
             </SelectTokenModal>
         </div>
     )
@@ -62,6 +97,8 @@ export default App
 `
 
 const Home = () => {
+    const theme = useMantineTheme()
+
     return (
         <Stack>
             <Box h={'50dvh'}>
@@ -74,13 +111,13 @@ const Home = () => {
                 <Grid.Col span={{ md: 12 }}>
                     <Title order={2} size={'62px'} ta={'center'}>How To</Title>
                 </Grid.Col>
-                <Grid.Col span={{ md: 6 }}>
+                <Grid.Col span={{ md: 12 }}>
                     <Stack>
                         <Title order={2}>Installation</Title>
                         <Text>
                             To install Starknet Token Kit simply use the commands below.
                         </Text>
-                        <Box style={{ borderRadius: '10px', overflow: 'hidden' }} >
+                        <CustomBoxWithRadius>
                             <CodeHighlightTabs
                                 expandCodeLabel="Show full code"
                                 collapseCodeLabel="Show less"
@@ -89,44 +126,68 @@ const Home = () => {
                                     { fileName: 'Npm', code: `npm i starknet-tokenkit`, language: 'shell' },
                                 ]}
                             />
-                        </Box>
+                        </CustomBoxWithRadius>
                         <Title order={2}>Setting Up your Application</Title>
                         <Text>Starknet Token Kit exposes a <InlineCodeHighlight code='<TokenKitWrapper />' /> component that you need to wrap your app with as below. </Text>
                         <Text>
                             The <Code>usingMantine</Code> prop is required. If you are using <Code>mantine UI</Code> as your UI library set it to <Code>true</Code> otherwise set it <Code>false</Code>
                         </Text>
-                        <Box style={{ borderRadius: '10px', overflow: 'hidden' }} >
+                        <CustomBoxWithRadius>
                             <CodeHighlight code={wrapperCode} />
-                        </Box>
+                        </CustomBoxWithRadius>
                     </Stack>
                 </Grid.Col>
-                <Grid.Col span={{ md: 6 }}>
+                <Grid.Col span={{ md: 12 }}>
                     <Stack>
                         <Title order={2}>Usage</Title>
                         <Text>
                             The token kit exposes some components and functions that you can use to achieve different functionality ranging from selecting tokens to converting data ie
                             {' '}  <InlineCodeHighlight code='hexadecimals' /> to readable strings.
                         </Text>
-                        <Box style={{ borderRadius: '10px', overflow: 'hidden' }} >
-                            <CodeHighlight code={usageCode} language='tsx' />
-                        </Box>
+                        <Grid>
+                            <Grid.Col span={{ md: 12 }}>
+                                <Stack>
+                                    <Title order={4}>Styling object</Title>
+                                    <Text>Style your modal to match your theme!</Text>
+                                    <CustomBoxWithRadius>
+                                        <CodeHighlight code={stylingObject} language='ts' />
+                                    </CustomBoxWithRadius>
+                                </Stack>
+                            </Grid.Col>
+                            <Grid.Col span={{ md: 12 }}>
+                                <Stack>
+                                    <Title order={4}>Create your modal</Title>
+                                    <Text>Import the SelectTokenModal component to create your component</Text>
+                                    <CustomBoxWithRadius>
+                                        <CodeHighlight code={usageCode} language='tsx' />
+                                    </CustomBoxWithRadius>
+                                </Stack>
+                            </Grid.Col>
+                        </Grid>
 
                         <Title order={2}>On Page Usage</Title>
                         <Text>
                             Now you can import your component and use it in your page as below.
                         </Text>
-                        <Box style={{ borderRadius: '10px', overflow: 'hidden' }} >
+                        <CustomBoxWithRadius>
                             <CodeHighlight code={pageCode} language='tsx' />
-                        </Box>
-                        <Title order={2}>Output will be as below</Title>
-                        <Group justify='start'>
-                            <SelectToken />
-                        </Group>
+                        </CustomBoxWithRadius>
+                        <Card bg={theme.colors.dark[8]} radius={'lg'} p={'50px'}>
+                            <Stack>
+                                <Title order={2} ta={'center'}>Output will be as below</Title>
+                                <Group justify='center'>
+                                    <SelectToken />
+                                </Group>
+                            </Stack>
+                        </Card>
                     </Stack>
                 </Grid.Col>
             </Grid>
             <TokensTable DataTable={DataTable} />
             <ListTokenForm />
+            <Text>
+                Using next js checkout https://vercel.com/guides/react-context-state-management-nextjs
+            </Text>
             {/* <ConnectWalletBtn />
             <TokensTable />
             <AddAdminForm />

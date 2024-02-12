@@ -2,8 +2,11 @@
 
 .custom-bg {
     background:
-        linear-gradient(25deg, rgb(3 3 18 / 1) 0%, 45.14%, rgb(42 9 93 / 1) 69.79%, rgb(43 6 56 / 1) 100%) 100% 100% no-repeat no-repeat;
+        url(/assets/images/bg.jpg), linear-gradient(25deg, rgb(3 3 18 / 1) 0%, 45.14%, rgb(42 9 93 / 1) 69.79%, rgb(43 6 56 / 1) 100%) 100% 100% no-repeat no-repeat;
     background-attachment: fixed;
+    /* background-image: url(/assets/images/bg.jpg); */
+    background-blend-mode: multiply;
+    background-size: cover;
 }
 
 .h-100 {

@@ -1,10 +1,10 @@
-import { Button } from "@mantine/core"
-import { IconCurrencyDollar } from "@tabler/icons-react"
+import { Avatar, Box, Group, Stack, Text } from "@mantine/core"
 import { useState } from "react"
-import { SelectTokenModal, IToken } from "tokenkit"
+import { SelectTokenModal, IToken, limitChars } from "tokenkit"
 
 const SelectToken = () => {
     const [token, setToken] = useState<IToken>()
+    
     return (
         <div>
             <SelectTokenModal selectedToken={token} callBackFunc={setToken} themeObject={{
@@ -14,14 +14,28 @@ const SelectToken = () => {
                 tokenBackgroundColor: 'rgba(0, 0, 0, 0.1)',
                 tokenHoverColor: 'rgba(0, 0, 0, 0.5)',
                 searchBackgroundColor: 'rgba(0, 0, 0, 0.5)',
+                searchTextColor: 'black',
                 searchBorderColor: '#3d1698'
-                // headerFooterBackground: "red"
             }}>
-                <Button radius={'md'} leftSection={<IconCurrencyDollar size={'18px'} />}>
-                    {
-                        token ? token?.name : 'Select Token'
-                    }
-                </Button>
+                <Box p={'sm'} style={{
+                    background: 'rgba(0, 0, 0, 0.4)',
+                    borderRadius: '10px',
+                    cursor: 'pointer'
+                }}>
+                    <Group gap={6} align="center">
+                        <Avatar src={token?.icon}>
+                            {limitChars(token?.symbol ?? 'ST', 2, false)}
+                        </Avatar>
+                        {
+                            token ? (
+                                <Stack gap={2}>
+                                    <Text size="sm" fw={500}>{token?.name}</Text>
+                                    <Text size="xs">{token?.symbol}</Text>
+                                </Stack>
+                            ) : <Text>Select Token</Text>
+                        }
+                    </Group>
+                </Box>
             </SelectTokenModal>
         </div>
     )
