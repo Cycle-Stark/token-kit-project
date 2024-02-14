@@ -1,5 +1,5 @@
 
-import { ListTokenForm, TokensTable } from 'tokenkit'
+import { ListTokenForm, TokensTable } from 'starknet-tokenkit'
 import SelectToken from '../components/SelectToken'
 import { Box, Card, Code, Grid, Group, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { CodeHighlight, CodeHighlightTabs, InlineCodeHighlight } from '@mantine/code-highlight';

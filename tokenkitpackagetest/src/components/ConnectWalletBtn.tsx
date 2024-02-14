@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core'
-import { useTokenKitContext, limitChars } from 'tokenkit'
+import { useTokenKitContext, limitChars } from 'starknet-tokenkit'
 import { IconWallet } from '@tabler/icons-react'
 
 const ConnectWalletBtn = () => {

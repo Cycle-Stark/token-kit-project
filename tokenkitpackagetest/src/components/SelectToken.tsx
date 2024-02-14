@@ -1,6 +1,6 @@
 import { Avatar, Box, Group, Stack, Text } from "@mantine/core"
 import { useState } from "react"
-import { SelectTokenModal, IToken, limitChars } from "tokenkit"
+import { SelectTokenModal, IToken, limitChars } from "starknet-tokenkit"
 
 const SelectToken = () => {
     const [token, setToken] = useState<IToken>()

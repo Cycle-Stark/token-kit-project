@@ -1,4 +1,4 @@
-import { TokenKitWrapper } from 'tokenkit'
+import { TokenKitWrapper } from 'starknet-tokenkit'
 
 import CustomMantineProvider from './layouts/CustomMantineProvider';
 import MainLayout from './layouts/MainLayout';
