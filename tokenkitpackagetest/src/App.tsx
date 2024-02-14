@@ -17,7 +17,7 @@ function App() {
 
   return (
     <CustomMantineProvider>
-      <TokenKitWrapper usingMantine={true}>
+      <TokenKitWrapper usingMantine={false} primaryColor='violet' theme='dark'>
         <MainLayout>
           <Home />
         </MainLayout>

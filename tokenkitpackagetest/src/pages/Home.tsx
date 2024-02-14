@@ -87,7 +87,7 @@ import { TokenKitWrapper } from 'starknet-tokenkit'
 const App = (props: any) => {
     const { children } = props
     return (
-        <TokenKitWrapper usingMantine={true}>
+        <TokenKitWrapper usingMantine={true} primaryColor='violet' theme='dark'>
             {children}
         </TokenKitWrapper>
     )

@@ -14,7 +14,7 @@ const SelectToken = () => {
                 tokenBackgroundColor: 'rgba(0, 0, 0, 0.1)',
                 tokenHoverColor: 'rgba(0, 0, 0, 0.5)',
                 searchBackgroundColor: 'rgba(0, 0, 0, 0.5)',
-                searchTextColor: 'black',
+                searchTextColor: 'white',
                 searchBorderColor: '#3d1698'
             }}>
                 <Box p={'sm'} style={{
