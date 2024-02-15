@@ -1,8 +1,9 @@
 
-import { AppShell, Box, Burger, Container, Group, Title } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { AppShell, Box, Container, Group, Image } from '@mantine/core';
 import { ReactNode } from 'react';
 import ConnectWalletBtn from '../components/ConnectWalletBtn';
+import CustomNavLink, { navlinks } from '../components/navigation/CustomNavigationLink';
+import SmallScreenMenu from '../components/navigation/SmallScreenMenu';
 
 
 
@@ -11,7 +12,6 @@ interface IMainLayout {
 }
 
 export default function MainLayout(props: IMainLayout) {
-    const [opened, { toggle }] = useDisclosure();
     const { children } = props
     return (
         <Box className='custom-bg' pos={'relative'} style={{ zIndex: 1 }}>
@@ -38,20 +38,26 @@ export default function MainLayout(props: IMainLayout) {
                     backdropFilter: 'blur(5px)',
                     WebkitBackdropFilter: 'blur(5px)',
                 }} withBorder={false}>
-                    <Group h="100%" px="md" justify='space-between'>
-                        <Group h="100%" px="md">
-                            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                            <Title order={2}>TokenKit</Title>
+                    <Group h="100%" px="xs" justify='space-between' gap={0}>
+                        <Group h="100%" px="xs">
+                            <Image src={'/assets/images/logo/logo-transparent-1.svg'} mah={'80%'} />
                         </Group>
-                        <Group h="100%" px="md">
+                        <Group className='h-100' visibleFrom='sm'>
+                            {
+                                navlinks.map((link: any, i: number) => (
+                                    <CustomNavLink key={`header_${i}`} {...link} />
+                                ))
+                            }
+                        </Group>
+                        <Group h="100%" px="xs" align='center' gap={2}>
+                            <SmallScreenMenu />
                             <ConnectWalletBtn />
                         </Group>
                     </Group>
                 </AppShell.Header>
                 <AppShell.Main>
-                    <Container size={'xl'}>
+                    <Container size={'xl'} py="50px">
                         {children}
-                        <Box h={'1000px'} />
                     </Container>
                 </AppShell.Main>
             </AppShell>
