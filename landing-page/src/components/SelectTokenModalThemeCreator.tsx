@@ -3,6 +3,8 @@ import { useForm } from "@mantine/form"
 import { IModalThemeObject, IToken, SelectTokenContainer } from "starknet-tokenkit"
 import { useState } from "react"
 import { IconCodeAsterix } from "@tabler/icons-react"
+import randomColor from 'randomcolor'
+// import colorContrast from 'contrast-color'
 
 interface ICustomColorInput {
     label: string
@@ -36,12 +38,21 @@ const SelectTokenModalThemeCreator = () => {
         }
     })
 
+    const generateModalBgColorandTextColor = () => {
+        const bg = randomColor();
+        // const textColor = new colorContrast()
+        // console.log(textColor.contrastColor({ bgColor: bg }))
+        form.setFieldValue('modalBackground', bg)
+        // form.setFieldValue('textColor', textColor)
+    }
+
     return (
         <div>
             <Grid>
                 <Grid.Col span={{ md: 6 }}>
                     <Card radius={'md'} bg={theme.colors.violet[7]}>
                         <Stack gap={6}>
+                            <Button onClick={generateModalBgColorandTextColor}>Generate Modal Background</Button>
                             <CustomColorInput label="Text Color" form={form} field_name="textColor" />
                             <CustomColorInput label="Modal Background" form={form} field_name="modalBackground" />
                             <CustomColorInput label="Header Footer Background" form={form} field_name="headerFooterBackground" />
