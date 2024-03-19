@@ -1,7 +1,0 @@
-.custom_input {
-    border-color: #42167757 !important;
-
-    :focus {
-        border-color: #4b1b84fa !important;
-    }
-}
