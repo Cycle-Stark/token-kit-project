@@ -4,45 +4,47 @@ title: "Getting started"
 ---
 
 # TokenKit
+Starknet Tokenkit is a package that provides quick access to tokens in a modal format or you can interact with the contract to read the different tokens using the contract address and the abi.
 
-Let's discover **TokenKit in less than 5 minutes**.
 
-## Getting Started
+Also you can add your own token by visiting the landing page: [Tokenkit](https://tokenkit-gamma.vercel.app)
 
-Get started by **creating a new site**.
+---
+- This is tested on React.
+---
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+## Linking the Tokenkit Wrapper
+To use Tokenkit, its pretty easy, first you import the `TokenKitWrapper` and wrap your entire app with it.
+
+```tsx
+import { TokenKitWrapper } from 'starknet-tokenkit'
+const App = (props: any) => {
+    const { children } = props
+    return (
+        <TokenKitWrapper usingMantine={true} primaryColor='violet' theme='dark' network="SN_GOERLI" nodeUrl="<GET_ONE_FROM_INFRA_OR_ALCHEMY__BASED_ON_NETWORK>">
+            {children}
+        </TokenKitWrapper>
+    )
+}
+
+export default App
+```
 
 ### What you'll need
 
 - [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
   - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
 
-## Generate a new site
 
-Generate a new Docusaurus site using the **classic template**.
 
-The classic template will automatically be added to your project after you run the command:
 
-```bash
-npm init docusaurus@latest my-website classic
-```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
 
-The command also installs all necessary dependencies you need to run Docusaurus.
 
-## Start your site
 
-Run the development server:
 
-```bash
-cd my-website
-npm run start
-```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+
+

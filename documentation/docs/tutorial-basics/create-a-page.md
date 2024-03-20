@@ -2,42 +2,37 @@
 sidebar_position: 1
 ---
 
-# Create a Page
+# Create a custom component
+## Creating a custom component that will be used to show the selected token.
 
-Add **Markdown or React** files to `src/pages` to create a **standalone page**:
+Create a preview component or a component that can be wrapped with the token modal. This component will help show the selected token and also it will act as a button to open the modal.
 
-- `src/pages/index.js` → `localhost:3000/`
-- `src/pages/foo.md` → `localhost:3000/foo`
-- `src/pages/foo/bar.js` → `localhost:3000/foo/bar`
+```tsx
+import { Box, Group, Avatar, Stack, Text } from "@mantine/core"
 
-## Create your first React Page
-
-Create a file at `src/pages/my-react-page.js`:
-
-```jsx title="src/pages/my-react-page.js"
-import React from 'react';
-import Layout from '@theme/Layout';
-
-export default function MyReactPage() {
-  return (
-    <Layout>
-      <h1>My React page</h1>
-      <p>This is a React page</p>
-    </Layout>
-  );
+// This can be any component, just a component to be wrapped with `SelectTokenModal` Component
+const MyCustomTokenPreviewComponent = (props: any) => {
+    const { token } = props
+    return (
+        <Box p={'sm'} style={{
+            background: 'rgba(0, 0, 0, 0.4)',
+            borderRadius: '10px',
+            cursor: 'pointer'
+        }}>
+            <Group gap={6} align="center">
+                <Avatar src={token?.icon}>
+                    {limitChars(token?.symbol ?? 'ST', 2, false)}
+                </Avatar>
+                {
+                    token ? (
+                        <Stack gap={2}>
+                            <Text size="sm" fw={500}>{token?.name}</Text>
+                            <Text size="xs">{token?.symbol}</Text>
+                        </Stack>
+                    ) : <Text>Select Token</Text>
+                }
+            </Group>
+        </Box>
+    )
 }
 ```
-
-A new page is now available at [http://localhost:3000/my-react-page](http://localhost:3000/my-react-page).
-
-## Create your first Markdown Page
-
-Create a file at `src/pages/my-markdown-page.md`:
-
-```mdx title="src/pages/my-markdown-page.md"
-# My Markdown page
-
-This is a Markdown page
-```
-
-A new page is now available at [http://localhost:3000/my-markdown-page](http://localhost:3000/my-markdown-page).
