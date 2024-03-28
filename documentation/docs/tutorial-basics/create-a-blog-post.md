@@ -2,33 +2,32 @@
 sidebar_position: 3
 ---
 
-# Create a Blog Post
+# Creating the Select Token component
 
-Docusaurus creates a **page for each blog post**, but also a **blog index page**, a **tag system**, an **RSS** feed...
+Create a select token component to be put as a child of Tokenkit wrapper. Since Tokenkit wrapper wraps your entire app, you can simply use the component below in any page.
 
-## Create your first Post
+Make the component reusable so you don't have to create different components to achieve the same. That is, you can move the call back function and selectedToken as props and therefore you can reuse the component with a different token and call back function.
 
-Create a file at `blog/2021-02-28-greetings.md`:
+```tsx
+import { SelectTokenModal, IToken } from "starknet-tokenkit"
+import { useState } from "react"
 
-```md title="blog/2021-02-28-greetings.md"
----
-slug: greetings
-title: Greetings!
-authors:
-  - name: Joel Marcey
-    title: Co-creator of Docusaurus 1
-    url: https://github.com/JoelMarcey
-    image_url: https://github.com/JoelMarcey.png
-  - name: Sébastien Lorber
-    title: Docusaurus maintainer
-    url: https://sebastienlorber.com
-    image_url: https://github.com/slorber.png
-tags: [greetings]
----
+/*
+@params
+selectedToken - This is the selected token for this particular component. It can be null or undefined.
+callBackFunc - a callback function that will be called once one clicks ona given token. This callback function takes in IToken(token). ie function myFunc = (token: IToken) => {* Perforom your logic here *}
+stylingObject - This is an object with different variables that will style the modal. Use the keys as are given in the above object.
+*/
 
-Congratulations, you have made your first post!
-
-Feel free to play around and edit this post as much as you like.
+const SelectToken = () => {
+    const [token, setToken] = useState<IToken>()
+    return (
+        <div>
+            <SelectTokenModal selectedToken={token} callBackFunc={setToken} themeObject={stylingObject}>
+                <MyCustomTokenPreviewComponent token={token} />
+            </SelectTokenModal>
+        </div>
+    )
+}
+export default SelectToken
 ```
-
-A new blog post is now available at [http://localhost:3000/blog/greetings](http://localhost:3000/blog/greetings).

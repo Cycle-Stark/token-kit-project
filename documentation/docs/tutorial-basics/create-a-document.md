@@ -2,56 +2,21 @@
 sidebar_position: 2
 ---
 
-# Create a Document
+# Creating the modals styling object
 
-Documents are **groups of pages** connected through:
 
-- a **sidebar**
-- **previous/next navigation**
-- **versioning**
 
-## Create your first Doc
+Remember to use all the keys given here with different colors to match your overal project theme.
 
-Create a Markdown file at `docs/hello.md`:
-
-```md title="docs/hello.md"
-# Hello
-
-This is my **first Docusaurus document**!
-```
-
-A new document is now available at [http://localhost:3000/docs/hello](http://localhost:3000/docs/hello).
-
-## Configure the Sidebar
-
-Docusaurus automatically **creates a sidebar** from the `docs` folder.
-
-Add metadata to customize the sidebar label and position:
-
-```md title="docs/hello.md" {1-4}
----
-sidebar_label: 'Hi!'
-sidebar_position: 3
----
-
-# Hello
-
-This is my **first Docusaurus document**!
-```
-
-It is also possible to create your sidebar explicitly in `sidebars.js`:
-
-```js title="sidebars.js"
-export default {
-  tutorialSidebar: [
-    'intro',
-    // highlight-next-line
-    'hello',
-    {
-      type: 'category',
-      label: 'Tutorial',
-      items: ['tutorial-basics/create-a-document'],
-    },
-  ],
-};
+```ts
+const stylingObject = {
+    textColor: "white",
+    modalBackground: "#11052d",
+    headerFooterBackground: "rgba(0, 0, 0, 0.1)",
+    tokenBackgroundColor: 'rgba(0, 0, 0, 0.1)',
+    tokenHoverColor: 'rgba(0, 0, 0, 0.5)',
+    searchBackgroundColor: 'rgba(0, 0, 0, 0.5)',
+    searchBorderColor: '#3d1698'
+}
+`
 ```

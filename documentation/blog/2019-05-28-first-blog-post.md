@@ -2,11 +2,11 @@
 slug: first-blog-post
 title: First Blog Post
 authors:
-  name: Gao Wei
-  title: Docusaurus Core Team
+  name: TokenKit Founder 1
+  title: TokenKit Core Team
   url: https://github.com/wgao19
   image_url: https://github.com/wgao19.png
-tags: [hola, docusaurus]
+tags: [hola, tokenKit]
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+dedicated core dev lead to ensure tokenKit works
