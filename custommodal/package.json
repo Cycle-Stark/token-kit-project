@@ -1,0 +1,49 @@
+{
+  "name": "starknet-tokenkit",
+  "version": "2.5.9",
+  "description": "Token Kit is a Starknet Chain kit for all tokens. It provides a modal that returns the tokens available in starknet and also has a contract to store all the given tokens. It is easier to integrate to your project lets say a swapping platform.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {},
+  "scripts": {
+    "build": "tsup",
+    "build:modal": "rollup -c",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish:package": "yarn publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Cycle-Stark/token-kit.git"
+  },
+  "keywords": [
+    "starknet",
+    "tokens",
+    "starknetkit",
+    "tokenkit",
+    "token"
+  ],
+  "author": "Dalmas Ogembo, Brian Onchezz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Cycle-Stark/token-kit/issues"
+  },
+  "homepage": "https://tokenkit-gamma.vercel.app",
+  "dependencies": {
+    "bignumber.js": "^9.1.2",
+    "dexie": "^3.2.5",
+    "dexie-react-hooks": "^1.1.7",
+    "react": "^18.2.0",
+    "starknet": "^5.24.3",
+    "starknetkit": "^1.1.9"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "tsup": "^8.0.1",
+    "typescript": "^5.4.5"
+  }
+}
