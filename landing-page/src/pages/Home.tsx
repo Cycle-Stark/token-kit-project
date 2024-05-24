@@ -1,19 +1,21 @@
 
 import SelectToken from '../components/SelectToken'
-import { Anchor, Box, Card, Code, Grid, Group, Image, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Box, Card, Grid, Group, Image, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { CodeHighlight, CodeHighlightTabs, InlineCodeHighlight } from '@mantine/code-highlight';
 import CustomBoxWithRadius from '../components/common/CustomBoxWithRadius';
 import SelectTokenModalThemeCreator from '../components/SelectTokenModalThemeCreator';
+// import Modal from 'starknet-tokenkit';
 
-const stylingObject = `
-{
-    textColor: "white",
-    modalBackground: "#11052d",
-    headerFooterBackground: "rgba(0, 0, 0, 0.1)",
-    tokenBackgroundColor: 'rgba(0, 0, 0, 0.1)',
-    tokenHoverColor: 'rgba(0, 0, 0, 0.5)',
-    searchBackgroundColor: 'rgba(0, 0, 0, 0.5)',
-    searchBorderColor: '#3d1698'
+const stylingObject = `{
+    textColor: "black",
+    headerFooterBg: "rgba(0, 0, 0, 0.1)",
+    backgroundColor: "white",
+    fontFamily: "Space Grotesk, sans-serif",
+    searchBackground: "rgba(0, 0, 0, 0.1)",
+    searchColor: "black",
+    searchBorderColor: "rgba(14, 6, 46, 0)",
+    searchFocusBorderColor: "violet",
+    primaryColor: "violet",
 }
 `
 
@@ -82,7 +84,11 @@ import { TokenKitWrapper } from 'starknet-tokenkit'
 const App = (props: any) => {
     const { children } = props
     return (
-        <TokenKitWrapper usingMantine={true} primaryColor='violet' theme='dark'>
+        <TokenKitWrapper 
+            network="SN_MAIN" // Required - SN_MAIN | SN_SEPOLIA
+            sepoliaNodeURL="https://starknet-sepolia.infura.io/v3/**********" // Required
+            mainnetNodeURL="https://starknet-mainnet.infura.io/v3/******************" // Required
+        >
             {children}
         </TokenKitWrapper>
     )
@@ -91,15 +97,27 @@ const App = (props: any) => {
 export default App
 `
 
+const selectTokenContainerCode = `
+<SelectTokenContainer
+    selectedToken={SelectedToken} // Pass a selected token as when creating a modal
+    callBackFunc={setSelectedToken} // Pass a call back function that will update the selected token
+    themeObject={stylingObject} // Pass in the styling object
+    modalHeight="700px"  // Always pass the height.
+/>
+`
+
 const Home = () => {
     const theme = useMantineTheme()
 
     return (
         <Stack>
-            <Box h={'50dvh'}>
+            <Box mih={'50dvh'}>
                 <Stack justify='center' className='h-100'>
+                    <Image src={"/assets/images/logo/starknet.png"} w={'300px'} maw={'400px'} mx={"auto"} />
                     <Title ta={'center'} fw={700} size={'100px'}>Token Kit</Title>
-                    <Text ta="center" fw={500} size='22px'>Empower Your dApp: Seamlessly Load Starknet Tokens with Token Kit</Text>
+                    <Text ta="center" fw={500} size='22px'>
+                        Empower Your dApp: Seamlessly Load Starknet Tokens with Token Kit
+                    </Text>
                     <Card bg={theme.colors.violet[7]} radius={'lg'} p={'50px'}>
                         <Stack>
                             <Title order={2} ta={'center'}>Try Me!</Title>
@@ -119,6 +137,18 @@ const Home = () => {
             <Grid py={'50px'}>
                 <Grid.Col span={{ md: 8 }}>
                     <Grid>
+                        <Grid.Col span={{ md: 12 }}>
+                            <Stack>
+
+                                <Title order={2} size={'62px'} ta={'center'}>What is Tokenkit</Title>
+                                <Text fw={500} size='md'>
+                                    Tokenkit is a package that keeps track of tokens listed on the tokenkit contract and displays them through a modal and a token container while the tokens keep getting autoupdated for users of your dapp.
+                                </Text>
+                                <Text fw={500} size='md'>
+                                    Tokenkit makes it easy to add a working modal and a container of tokens to your dapp making it easy and fast for you to focus on core business logic.
+                                </Text>
+                            </Stack>
+                        </Grid.Col>
                         <Grid.Col span={{ md: 12 }}>
                             <Title order={2} size={'62px'} ta={'center'}>How To</Title>
                         </Grid.Col>
@@ -140,9 +170,6 @@ const Home = () => {
                                 </CustomBoxWithRadius>
                                 <Title order={2}>Setting Up your Application</Title>
                                 <Text>Starknet Token Kit exposes a <InlineCodeHighlight code='<TokenKitWrapper />' /> component that you need to wrap your app with as below. </Text>
-                                <Text>
-                                    The <Code>usingMantine</Code> prop is required. If you are using <Code>mantine UI</Code> as your UI library set it to <Code>true</Code> otherwise set it <Code>false</Code>
-                                </Text>
                                 <CustomBoxWithRadius>
                                     <CodeHighlight code={wrapperCode} />
                                 </CustomBoxWithRadius>
@@ -192,10 +219,21 @@ const Home = () => {
                                     </Stack>
                                 </Card>
 
-                                <Title order={2}>Next JS Setup</Title>
+                                <Title order={2}>Using the SelectTokenContainer </Title>
+                                <Text>
+                                    Select token container allows to embed the modal in a page. This can be used in instances that you don't intend to use a modal.
+                                </Text>
+                                <Text>
+                                    For this case, an example usage is what we have used above where we create a theme for our modal.
+                                </Text>
+                                <CustomBoxWithRadius>
+                                    <CodeHighlight code={selectTokenContainerCode} language='tsx' />
+                                </CustomBoxWithRadius>
+
+                                {/* <Title order={2}>Next JS Setup</Title>
                                 <Text>
                                     Using next js checkout <Anchor href='https://vercel.com/guides/react-context-state-management-nextjs' target='_blank'>here</Anchor>
-                                </Text>
+                                </Text> */}
 
                             </Stack>
                         </Grid.Col>

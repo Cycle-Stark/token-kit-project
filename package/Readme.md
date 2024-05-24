@@ -20,17 +20,19 @@ import { TokenKitWrapper } from 'starknet-tokenkit'
 
 /*
 @params
-usingMantine - Whether you are using Mantine UI or not. If you are using mantine, set this to `true` else `false`
-primaryColor - This is the color for buttons on the modal and other components. Pick a color that atleast matches your overal theme. This will be overriden if you are using Mantine UI and you have set a primary color. Options are: 'blue' | 'cyan' | 'dark' | 'grape' | 'gray' | 'green' | 'indigo' | 'lime' | 'orange' | 'pink' | 'red' | 'teal' | 'violet' | 'yellow'
-colorScheme - 'dark' | 'light'
-network: 'SN_MAIN' | 'SN_GOERLI' -> SN_GOERLI is the only supported currently
-nodeUrl: string
+network: 'SN_MAIN' | 'SN_SEPOLIA' -> Both are fully supported
+sepoliaNodeURL: string
+mainnetNodeURL: string
 */
 
 const App = (props: any) => {
     const { children } = props
     return (
-        <TokenKitWrapper usingMantine={true} primaryColor='violet' theme='dark' network="SN_GOERLI" nodeUrl="<GET_ONE_FROM_INFRA_OR_ALCHEMY__BASED_ON_NETWORK>">
+       <TokenKitWrapper
+        network="SN_MAIN"
+        sepoliaNodeURL="https://starknet-sepolia.infura.io/v3/**********"
+        mainnetNodeURL="https://starknet-mainnet.infura.io/v3/******************" 
+        >
             {children}
         </TokenKitWrapper>
     )
@@ -80,12 +82,14 @@ Remember to use all the keys given here with different colors to match your over
 ```ts
 const stylingObject = {
     textColor: "white",
-    modalBackground: "#11052d",
-    headerFooterBackground: "rgba(0, 0, 0, 0.1)",
-    tokenBackgroundColor: 'rgba(0, 0, 0, 0.1)',
-    tokenHoverColor: 'rgba(0, 0, 0, 0.5)',
-    searchBackgroundColor: 'rgba(0, 0, 0, 0.5)',
-    searchBorderColor: '#3d1698'
+    headerFooterBg: "rgba(0, 0, 0, 0.28)",
+    backgroundColor: "#06a5a3",
+    fontFamily: "Space Grotesk, sans-serif",
+    searchBackground: "rgba(151, 244, 238, 0.46)",
+    searchColor: "white",
+    searchBorderColor: "rgba(14, 6, 46, 0)",
+    searchFocusBorderColor: "rgba(151, 244, 238, 1)",
+    primaryColor: "rgba(0, 97, 91, 1)"
 }
 `
 ```
@@ -111,7 +115,11 @@ const SelectToken = () => {
     const [token, setToken] = useState<IToken>()
     return (
         <div>
-            <SelectTokenModal selectedToken={token} callBackFunc={setToken} themeObject={stylingObject}>
+            <SelectTokenModal 
+            selectedToken={token} 
+            callBackFunc={setToken} 
+            themeObject={stylingObject}
+            >
                 <MyCustomTokenPreviewComponent token={token} />
             </SelectTokenModal>
         </div>

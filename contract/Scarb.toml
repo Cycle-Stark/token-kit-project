@@ -13,4 +13,8 @@ starknet = "2.5.4"
 casm = true
 sierra = true
 
+# Add the following section
+[tool.voyager]
+my_contract = { path = "lib.cairo" }
+
 

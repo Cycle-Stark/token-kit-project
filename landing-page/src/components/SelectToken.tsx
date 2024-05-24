@@ -1,23 +1,50 @@
 import { Avatar, Box, Group, Stack, Text } from "@mantine/core"
 import { useState } from "react"
-import { SelectTokenModal, IToken, limitChars, IModalThemeObject, } from "starknet-tokenkit"
+import { SelectTokenModal, IToken, limitChars } from "starknet-tokenkit"
 
 interface ISelectToken {
-    themeObj?: IModalThemeObject
+    themeObj?: any
 }
 
 const SelectToken = ({ themeObj }: ISelectToken) => {
     const [token, setToken] = useState<IToken>()
-    
+    // const theme = useMantineTheme()
+
+    // const defaultThemeObj = {
+    //     textColor: 'white',
+    //     headerFooterBg: "rgba(0, 0, 0, 0.28)",
+    //     backgroundColor: "rgba(32, 6, 87, 1)",
+    //     fontFamily: "Space Grotesk, sans-serif",
+    //     searchBackground: "rgba(0, 0, 0, 0.51)",
+    //     searchColor: 'white',
+    //     searchBorderColor: 'rgba(14, 6, 46, 0)',
+    //     searchFocusBorderColor: theme.colors.violet[5],
+    //     primaryColor: "yellow",
+    // }
+
+    // const defaultThemeObj = {
+    //     textColor: 'black',
+    //     headerFooterBg: "rgba(0, 0, 0, 0.1)",
+    //     backgroundColor: "white",
+    //     fontFamily: "Space Grotesk, sans-serif",
+    //     searchBackground: "rgba(0, 0, 0, 0.1)",
+    //     searchColor: 'black',
+    //     searchBorderColor: 'rgba(14, 6, 46, 0)',
+    //     searchFocusBorderColor: theme.colors.violet[5],
+    //     primaryColor: theme.colors.violet[5],
+    // }
+
+
     const defaultThemeObj = {
-        textColor: "white",
-        modalBackground: "#11052d",
-        headerFooterBackground: "rgba(0, 0, 0, 0.1)",
-        tokenBackgroundColor: 'rgba(0, 0, 0, 0.1)',
-        tokenHoverColor: 'rgba(0, 0, 0, 0.5)',
-        searchBackgroundColor: 'rgba(0, 0, 0, 0.5)',
-        searchTextColor: 'white',
-        searchBorderColor: '#3d1698'
+        "textColor": "white",
+        "headerFooterBg": "rgba(0, 0, 0, 0.28)",
+        "backgroundColor": "#10b793",
+        "fontFamily": "Space Grotesk, sans-serif",
+        "searchBackground": "rgba(151, 244, 238, 0.46)",
+        "searchColor": "white",
+        "searchBorderColor": "rgba(14, 6, 46, 0)",
+        "searchFocusBorderColor": "rgba(151, 244, 238, 1)",
+        "primaryColor": "rgba(74, 0, 62, 1)"
     }
 
     return (
@@ -43,7 +70,7 @@ const SelectToken = ({ themeObj }: ISelectToken) => {
                     </Group>
                 </Box>
             </SelectTokenModal>
-        </div>
+        </div >
     )
 }
 

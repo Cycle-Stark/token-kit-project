@@ -1,7 +1,7 @@
 
 import { AppShell, Box, Container, Group, Image } from '@mantine/core';
 import { ReactNode } from 'react';
-import ConnectWalletBtn from '../components/ConnectWalletBtn';
+import ConnectWalletBtn, { DisplayConnectedNetwork } from '../components/ConnectWalletBtn';
 import CustomNavLink, { navlinks } from '../components/navigation/CustomNavigationLink';
 import SmallScreenMenu from '../components/navigation/SmallScreenMenu';
 
@@ -50,8 +50,11 @@ export default function MainLayout(props: IMainLayout) {
                             }
                         </Group>
                         <Group h="100%" px="xs" align='center' gap={2}>
-                            <SmallScreenMenu />
+                            <Box hiddenFrom='md'>
+                                <SmallScreenMenu />
+                            </Box>
                             <ConnectWalletBtn />
+                            <DisplayConnectedNetwork />
                         </Group>
                     </Group>
                 </AppShell.Header>

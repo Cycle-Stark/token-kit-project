@@ -1,10 +1,9 @@
-import { Button, Card, ColorInput, CopyButton, Grid, Group, Stack, Text, Title, useMantineTheme } from "@mantine/core"
+import { Button, Card, Center, ColorInput, CopyButton, Grid, Group, Stack, Text, Title, useMantineTheme } from "@mantine/core"
 import { useForm } from "@mantine/form"
-import { IModalThemeObject, IToken, SelectTokenContainer } from "starknet-tokenkit"
 import { useState } from "react"
 import { IconCodeAsterix } from "@tabler/icons-react"
 import randomColor from 'randomcolor'
-// import colorContrast from 'contrast-color'
+import { SelectTokenContainer } from "starknet-tokenkit"
 
 interface ICustomColorInput {
     label: string
@@ -23,18 +22,19 @@ const CustomColorInput = (props: ICustomColorInput) => {
 }
 
 const SelectTokenModalThemeCreator = () => {
-    const [SelectedToken, setSelectedToken] = useState<IToken>()
+    const [SelectedToken, setSelectedToken] = useState<any>()
     const theme = useMantineTheme()
-    const form = useForm<IModalThemeObject>({
+    const form = useForm<any>({
         initialValues: {
-            "textColor": "rgba(255, 255, 255, 1)",
-            "modalBackground": "rgba(32, 6, 87, 1)",
-            "headerFooterBackground": "rgba(0, 0, 0, 0.28)",
-            "tokenBackgroundColor": "rgba(0, 0, 0, 0.06)",
-            "tokenHoverColor": "rgba(0, 0, 0, 0.2)",
-            "searchBackgroundColor": "rgba(0, 0, 0, 0.51)",
-            "searchTextColor": "rgba(255, 255, 255, 1)",
-            "searchBorderColor": "rgba(14, 6, 46, 0)"
+            textColor: 'black',
+            headerFooterBg: "rgba(0, 0, 0, 0.1)",
+            backgroundColor: "white",
+            fontFamily: "Space Grotesk, sans-serif",
+            searchBackground: "rgba(0, 0, 0, 0.1)",
+            searchColor: 'black',
+            searchBorderColor: 'rgba(14, 6, 46, 0)',
+            searchFocusBorderColor: theme.colors.violet[5],
+            primaryColor: theme.colors.violet[5],
         }
     })
 
@@ -42,7 +42,7 @@ const SelectTokenModalThemeCreator = () => {
         const bg = randomColor();
         // const textColor = new colorContrast()
         // console.log(textColor.contrastColor({ bgColor: bg }))
-        form.setFieldValue('modalBackground', bg)
+        form.setFieldValue('backgroundColor', bg)
         // form.setFieldValue('textColor', textColor)
     }
 
@@ -54,13 +54,13 @@ const SelectTokenModalThemeCreator = () => {
                         <Stack gap={6}>
                             <Button onClick={generateModalBgColorandTextColor}>Generate Modal Background</Button>
                             <CustomColorInput label="Text Color" form={form} field_name="textColor" />
-                            <CustomColorInput label="Modal Background" form={form} field_name="modalBackground" />
-                            <CustomColorInput label="Header Footer Background" form={form} field_name="headerFooterBackground" />
-                            <CustomColorInput label="Search Background" form={form} field_name="searchBackgroundColor" />
-                            <CustomColorInput label="Search Text Color" form={form} field_name="searchTextColor" />
+                            <CustomColorInput label="Modal Background" form={form} field_name="backgroundColor" />
+                            <CustomColorInput label="Header Footer Background" form={form} field_name="headerFooterBg" />
+                            <CustomColorInput label="Search Background" form={form} field_name="searchBackground" />
+                            <CustomColorInput label="Search Text Color" form={form} field_name="searchColor" />
                             <CustomColorInput label="Search Border Color" form={form} field_name="searchBorderColor" />
-                            <CustomColorInput label="Token Background" form={form} field_name="tokenBackgroundColor" />
-                            <CustomColorInput label="Token Hover Background" form={form} field_name="tokenHoverColor" />
+                            <CustomColorInput label="Search Border Color Focus" form={form} field_name="searchFocusBorderColor" />
+                            <CustomColorInput label="Primary Color" form={form} field_name="primaryColor" />
                             <Group justify="center">
                                 <CopyButton value={JSON.stringify(form.values, null, 4)}>
                                     {({ copied, copy }) => (
@@ -77,12 +77,16 @@ const SelectTokenModalThemeCreator = () => {
                     <Card bg={theme.colors.violet[7]} radius={'lg'} px={'50px'}>
                         <Stack>
                             <Title order={2} ta={'center'}>Preview</Title>
-                            <SelectTokenContainer
-                                modalHeight="700px"
-                                selectedToken={SelectedToken}
-                                callBackFunc={setSelectedToken}
-                                themeObject={form.values}
-                            />
+                            <Center h="700px">
+                                <SelectTokenContainer
+                                    selectedToken={SelectedToken}
+                                    callBackFunc={setSelectedToken}
+                                    // custsomClasses="select-container"
+                                    themeObject={form.values} modalHeight="700px" />
+                            </Center>
+                            <Text fw={500}>
+                                Above is Tokenkit container usage example
+                            </Text>
                         </Stack>
                     </Card>
                 </Grid.Col>

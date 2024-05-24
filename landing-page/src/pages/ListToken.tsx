@@ -1,10 +1,12 @@
-import { Box, Card, Container } from '@mantine/core'
-import { ListTokenForm } from 'starknet-tokenkit'
+import { Box, Card, Container, useMantineTheme } from '@mantine/core'
+import { ListTokenForm } from '../components/forms/forms'
 
 const ListToken = () => {
+    const theme = useMantineTheme()
+
     return (
         <Container size={"md"}>
-            <Card radius={'lg'} shadow='lg' p={{ md: '50px' }}>
+            <Card radius={'lg'} shadow='lg' p={{ md: '50px' }} bg={theme.colors.violet[9]}>
                 <Box p={'sm'}>
                     <ListTokenForm />
                 </Box>

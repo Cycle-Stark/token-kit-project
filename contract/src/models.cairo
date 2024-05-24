@@ -8,10 +8,10 @@ struct Token {
     name: felt252,
     symbol: felt252,
     decimals: u8,
+    
     verified: bool,
     public: bool,
     common: bool,
-    pair_id: felt252,
 }
 
 
@@ -20,5 +20,5 @@ struct Token {
 #[derive(Copy, Serde, Drop, starknet::Store)]
 struct Admin {
     address: ContractAddress,
-  amount :u256
+    amount :u256
 }

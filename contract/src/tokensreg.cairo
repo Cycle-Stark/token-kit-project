@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 use starknet::class_hash::ClassHash;
- 
+
 #[starknet::contract]
 mod TokenReg {
     use tokenreg::erc20::IERC20DispatcherTrait;
@@ -49,6 +49,7 @@ mod TokenReg {
         fn update_tokens_version(ref self: ContractState) {
             self.tokens_version.write(self.tokens_version.read() + 1)
         }
+
         fn assert_is_guardian(self: @ContractState) {
             let caller = get_caller_address();
 
@@ -59,16 +60,14 @@ mod TokenReg {
             let caller = get_caller_address();
             let available = self.admins.read(caller);
 
-            assert(self.guardian.read() == caller || available == true, 'Guardian/Admin Only');
+            assert(self.guardian.read() == caller || !available, 'Guardian/Admin Only');
         }
     }
 
 
     #[abi(embed_v0)]
     impl TokenRegImpl of ITokenReg<ContractState> {
-        fn add_token(
-            ref self: ContractState, address: ContractAddress, icon_link: felt252, pair_id: felt252
-        ) {
+        fn add_token(ref self: ContractState, address: ContractAddress, icon_link: felt252) {
             let token_id = self.tokens_count.read() + 1;
             let token: IERC20Dispatcher = IERC20Dispatcher { contract_address: address };
             let token_symbol = token.symbol();
@@ -83,8 +82,7 @@ mod TokenReg {
                 verified: false,
                 public: true,
                 common: false,
-                icon: icon_link,
-                pair_id
+                icon: icon_link
             };
 
             self.tokens.write(token_id, token);
@@ -99,14 +97,9 @@ mod TokenReg {
             public: bool,
             verified: bool,
             common: bool,
-            icon_link: felt252,
-            pair_id: felt252
+            icon_link: felt252
         ) {
-            let caller = get_caller_address();
-            let available = self.admins.read(caller);
-
-            assert(self.guardian.read() == caller || available == true, 'You are not allowed');
-
+            self.assert_is_guardian_or_admin();
             let token = self.tokens.read(token_index);
 
             let token = Token {
@@ -117,36 +110,35 @@ mod TokenReg {
                 verified: verified,
                 public: public,
                 icon: icon_link,
-                common,
-                pair_id
+                common
             };
 
             self.tokens.write(token_index, token);
             self.update_tokens_version();
         }
         fn add_admin(ref self: ContractState, address: ContractAddress) {
-            let caller = get_caller_address();
-            let available = self.admins.read(caller);
-            assert(self.guardian.read() == caller || available == true, 'You are not allowed');
+            // Only guardians can add admins
+            self.assert_is_guardian();
             self.admins.write(address, true);
             let admin_id = self.admins_count.read() + 1;
             self.admins_count.write(admin_id);
-            let admin = Admin {
-                address: address,
-                amount: 0,
-            };
+            let admin = Admin { address: address, amount: 0, };
             self.admins_store.write(admin_id, admin);
         }
-        fn get_admins(self: @ContractState, ) -> Array<Admin>{
+        fn get_admins(self: @ContractState,) -> Array<Admin> {
             let mut admins = ArrayTrait::<Admin>::new();
-            let admin_count  =self.admins_count.read();
-            let mut count  = 1;
+            let admin_count = self.admins_count.read();
+
+            // Add guardian to admins
+            let guardian_admin = Admin { address: self.guardian.read(), amount: 0 };
+            admins.append(guardian_admin);
+
+            let mut count = 1;
             loop {
-                if admin_count > 0 && count <= admin_count{ 
-                    let admin  =  self.admins_store.read(count);
+                if admin_count > 0 && count <= admin_count {
+                    let admin = self.admins_store.read(count);
                     admins.append(admin);
-                }
-                else{
+                } else {
                     break;
                 }
                 count += 1;
@@ -210,8 +202,7 @@ mod TokenReg {
                     verified: true,
                     public: token.public,
                     icon: token.icon,
-                    common: token.common,
-                    pair_id: token.pair_id
+                    common: token.common
                 };
 
                 self.tokens.write(token_index, token);
@@ -224,9 +215,6 @@ mod TokenReg {
                 contract_address: self.fee_token.read()
             };
             let _are_tokens_transfered = token.transfer(receiver, amount);
-        // if are_tokens_transfered {
-
-        // }
         }
     }
 
@@ -250,6 +238,7 @@ mod TokenReg {
     impl UpgradeableContract of IUpgradeableContract<ContractState> {
         fn upgrade(ref self: ContractState, impl_hash: ClassHash) {
             assert(!impl_hash.is_zero(), 'Class hash cannot be zero');
+            self.assert_is_guardian();
             starknet::replace_class_syscall(impl_hash).unwrap_syscall();
             self.version.write(self.version.read() + 1);
             self.emit(Event::Upgraded(Upgraded { implementation: impl_hash }))
@@ -260,3 +249,4 @@ mod TokenReg {
         }
     }
 }
+

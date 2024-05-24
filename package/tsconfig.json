@@ -13,6 +13,7 @@
         "jsx": "react",
         "outDir": "dist",
         "resolveJsonModule": true,
+        "experimentalDecorators": true
     },
     "include": [
         "src"

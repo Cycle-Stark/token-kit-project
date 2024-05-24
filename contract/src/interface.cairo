@@ -5,7 +5,7 @@ use tokenreg::models::Admin;
 #[starknet::interface]
 trait ITokenReg<TContractState> {
     fn add_token(
-        ref self: TContractState, address: ContractAddress, icon_link: felt252, pair_id: felt252
+        ref self: TContractState, address: ContractAddress, icon_link: felt252
     );
     fn edit_token(
         ref self: TContractState,
@@ -13,8 +13,7 @@ trait ITokenReg<TContractState> {
         public: bool,
         verified: bool,
         common: bool,
-        icon_link: felt252,
-        pair_id: felt252
+        icon_link: felt252
     );
     fn add_admin(ref self: TContractState, address: ContractAddress);
     fn get_tokens(self: @TContractState, page: u256) -> Array<Token>;

@@ -1,5 +1,5 @@
 import { Text, rem } from '@mantine/core';
-import { IconEye, IconHome2, IconPlus } from '@tabler/icons-react';
+import { IconEye, IconHome2, IconInfoCircle, IconPlus } from '@tabler/icons-react';
 import { NavLink, useMatch, useResolvedPath } from 'react-router-dom';
 
 export interface ICustomNavLinkProps {
@@ -24,6 +24,11 @@ export const navlinks = [
         to: '/view-tokens',
         icon: <IconEye style={{ width: rem(14), height: rem(14) }} />
     },
+    {
+        title: 'About',
+        to: '/about',
+        icon: <IconInfoCircle style={{ width: rem(14), height: rem(14) }} />
+    }
 ]
 
 
