@@ -3001,10 +3001,10 @@ split2@^4.0.0:
   resolved "https://registry.yarnpkg.com/split2/-/split2-4.2.0.tgz#c9c5920904d148bab0b9f67145f245a86aadbfa4"
   integrity sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==
 
-starknet-tokenkit@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/starknet-tokenkit/-/starknet-tokenkit-2.6.1.tgz#d02ace57e91941830da9c9342e3c968b5ac761a1"
-  integrity sha512-oyxZDUKYibt26ea12denLwYyf72WICXGD7cWnCZ9q2/XTxCrMqx13qFnPvwyofWuOxnOkLLWKO9iSFCCWFGjcA==
+starknet-tokenkit@^2.6.3:
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/starknet-tokenkit/-/starknet-tokenkit-2.6.3.tgz#16ba576ccbe40124d1291f6d15361f71bfc4f186"
+  integrity sha512-Gp6tPHIsc4lqGwSeSkXelNAN6UYGibvX7WNSUYDLtBFOt4fIJdsT/LD32KU+GHri1SLT8dA5edbajd79pNajCQ==
   dependencies:
     bignumber.js "^9.1.2"
     dexie "^3.2.5"

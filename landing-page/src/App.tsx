@@ -30,7 +30,7 @@ function App() {
   return (
     <BrowserRouter>
       <TokenKitWrapper
-        network="SN_MAIN"
+        network="SN_SEPOLIA"
         sepoliaNodeURL="https://starknet-sepolia.infura.io/v3/958e1b411a40480eacb8c0f5d640a8ec"
         mainnetNodeURL="https://starknet-mainnet.infura.io/v3/958e1b411a40480eacb8c0f5d640a8ec"
       >

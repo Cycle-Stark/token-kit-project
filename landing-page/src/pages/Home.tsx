@@ -80,6 +80,7 @@ const SwapPage = () => {
 
 const wrapperCode = `
 import { TokenKitWrapper } from 'starknet-tokenkit'
+import 'starknet-tokenkit/dist/index.css' // Remember to import styling, otherwise, everything will fail
 
 const App = (props: any) => {
     const { children } = props
