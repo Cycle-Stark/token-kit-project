@@ -181,6 +181,7 @@ const TokensTable = () => {
     };
 
     useEffect(() => {
+        setTokens([])
         loadTokensFromDB()
     }, [haveTokensChanged, network_, totalTokens])
 
