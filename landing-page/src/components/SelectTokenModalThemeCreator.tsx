@@ -1,6 +1,6 @@
 import { Button, Card, Center, ColorInput, CopyButton, Grid, Group, NumberInput, Stack, Text, Title, useMantineTheme } from "@mantine/core"
 import { useForm } from "@mantine/form"
-import { useEffect, useMemo, useState } from "react"
+import { useState } from "react"
 import { IconCodeAsterix } from "@tabler/icons-react"
 import randomColor from 'randomcolor'
 import { SelectTokenContainer } from "starknet-tokenkit"
@@ -62,9 +62,9 @@ const SelectTokenModalThemeCreator = () => {
         landingDb.defaultThemeObj = JSON.parse(getValue())
     }
 
-    const ifChanged = useMemo(() => ({
-        ...form.values
-    }), [form.values])
+    // const ifChanged = useMemo(() => ({
+    //     ...form.values
+    // }), [form.values])
 
     // useEffect(() => {
     //     tryStyle()
