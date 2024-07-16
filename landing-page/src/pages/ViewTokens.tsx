@@ -3,7 +3,7 @@ import TokensTable from '../components/TokensTable'
 
 const ViewTokens = () => {
     return (
-        <Container size={"xl"}>
+        <Container size={"xxl"}>
             <Stack>
                 <Title size={'42px'}>View all Listed tokens</Title>
                 <TokensTable />

@@ -5,7 +5,7 @@
  */
 
 /* You can override the default Infima variables here. */
-:root {
+/* :root {
   --ifm-color-primary: #2e8555;
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
@@ -15,10 +15,10 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-}
+} */
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
+/* [data-theme='dark'] {
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
@@ -27,4 +27,45 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+} */
+
+
+:root {
+  --ifm-color-primary: #8a2be2;
+  /* Blue Violet */
+  --ifm-color-primary-dark: #7a1fc8;
+  /* Darker Blue Violet */
+  --ifm-color-primary-darker: #6e1cb4;
+  /* Even Darker Blue Violet */
+  --ifm-color-primary-darkest: #5e1898;
+  /* Darkest Blue Violet */
+  --ifm-color-primary-light: #9a3eef;
+  /* Lighter Blue Violet */
+  --ifm-color-primary-lighter: #a351f2;
+  /* Even Lighter Blue Violet */
+  --ifm-color-primary-lightest: #b365f4;
+  /* Lightest Blue Violet */
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(138, 43, 226, 0.1);
+  /* Blue Violet */
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #9370db;
+  /* Medium Purple */
+  --ifm-color-primary-dark: #8360c4;
+  /* Darker Medium Purple */
+  --ifm-color-primary-darker: #7a56b8;
+  /* Even Darker Medium Purple */
+  --ifm-color-primary-darkest: #6a46a0;
+  /* Darkest Medium Purple */
+  --ifm-color-primary-light: #a080e1;
+  /* Lighter Medium Purple */
+  --ifm-color-primary-lighter: #aa8be4;
+  /* Even Lighter Medium Purple */
+  --ifm-color-primary-lightest: #b695e8;
+  /* Lightest Medium Purple */
+  --docusaurus-highlighted-code-line-bg: rgba(147, 112, 219, 0.3);
+  /* Medium Purple */
 }

@@ -23,16 +23,31 @@ import '@mantine/core/styles.layer.css';
 import 'mantine-datatable/styles.layer.css';
 import './styles/layout.css'
 import About from './pages/About';
+import { useSnapshot } from 'valtio';
+import { landingDb } from './simpledb';
 
 function App() {
-  // console.log(window?.starknet)
-  // console.log(window?.starknet_braavos)
+  const snap = useSnapshot(landingDb)
+
+  const defaultThemeObj = {
+    "r": "20px",
+    "textColor": "black",
+    "headerFooterBg": "rgba(0, 0, 0, 0.1)",
+    "backgroundColor": "#ffdfa8",
+    "fontFamily": "Space Grotesk, sans-serif",
+    "searchBackground": "rgba(0, 0, 0, 0.1)",
+    "searchColor": "black",
+    "searchBorderColor": "rgba(14, 6, 46, 0)",
+    "searchFocusBorderColor": "#845ef7",
+    "primaryColor": "#845ef7",
+  }
   return (
     <BrowserRouter>
       <TokenKitWrapper
-        network="SN_MAIN"
+        network="SN_SEPOLIA"
         sepoliaNodeURL="https://starknet-sepolia.infura.io/v3/958e1b411a40480eacb8c0f5d640a8ec"
         mainnetNodeURL="https://starknet-mainnet.infura.io/v3/958e1b411a40480eacb8c0f5d640a8ec"
+        themeObject={snap.defaultThemeObj ?? defaultThemeObj}
       >
         <CustomMantineProvider>
           <MainLayout>

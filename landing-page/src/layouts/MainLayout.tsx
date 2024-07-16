@@ -59,7 +59,7 @@ export default function MainLayout(props: IMainLayout) {
                     </Group>
                 </AppShell.Header>
                 <AppShell.Main>
-                    <Container size={'xl'} py="50px">
+                    <Container size={'xxl'} py="50px">
                         {children}
                     </Container>
                 </AppShell.Main>

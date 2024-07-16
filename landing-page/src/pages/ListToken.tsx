@@ -6,7 +6,7 @@ const ListToken = () => {
 
     return (
         <Container size={"md"}>
-            <Card radius={'lg'} shadow='lg' p={{ md: '50px' }} bg={theme.colors.violet[9]}>
+            <Card radius={'lg'} shadow='lg' p={{ md: '50px' }} bg={theme.colors.dark[7]}>
                 <Box p={'sm'}>
                     <ListTokenForm />
                 </Box>

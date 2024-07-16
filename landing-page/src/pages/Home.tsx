@@ -1,12 +1,13 @@
 
 import SelectToken from '../components/SelectToken'
-import { Box, Card, Grid, Group, Image, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Box, Card, Container, Grid, Group, Image, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { CodeHighlight, CodeHighlightTabs, InlineCodeHighlight } from '@mantine/code-highlight';
 import CustomBoxWithRadius from '../components/common/CustomBoxWithRadius';
 import SelectTokenModalThemeCreator from '../components/SelectTokenModalThemeCreator';
 // import Modal from 'starknet-tokenkit';
 
-const stylingObject = `{
+const stylingObject = `const stylingObject = {
+    r: "20px", // This is for Radius of the modal/container
     textColor: "black",
     headerFooterBg: "rgba(0, 0, 0, 0.1)",
     backgroundColor: "white",
@@ -55,7 +56,10 @@ const SelectToken = () => {
     const [token, setToken] = useState<IToken>()
     return (
         <div>
-            <SelectTokenModal selectedToken={token} callBackFunc={setToken} themeObject={stylingObject}>
+            <SelectTokenModal selectedToken={token} callBackFunc={setToken}
+                // Optional - Default 'fade', Options: 'bounce' | 'slide' | 'ease' | 'fade'
+                animation="bounce"
+            >
                 <MyCustomTokenPreviewComponent token={token} />
             </SelectTokenModal>
         </div>
@@ -74,7 +78,7 @@ const SwapPage = () => {
         <div>
             <SelectToken />
         </div>
-    )
+    ) 
 }
 `
 
@@ -89,6 +93,7 @@ const App = (props: any) => {
             network="SN_MAIN" // Required - SN_MAIN | SN_SEPOLIA
             sepoliaNodeURL="https://starknet-sepolia.infura.io/v3/**********" // Required
             mainnetNodeURL="https://starknet-mainnet.infura.io/v3/******************" // Required
+            themeObject={stylingObject}
         >
             {children}
         </TokenKitWrapper>
@@ -111,146 +116,144 @@ const Home = () => {
     const theme = useMantineTheme()
 
     return (
-        <Stack>
-            <Box mih={'50dvh'}>
-                <Stack justify='center' className='h-100'>
-                    <Image src={"/assets/images/logo/starknet.png"} w={'300px'} maw={'400px'} mx={"auto"} />
-                    <Title ta={'center'} fw={700} size={'100px'}>Token Kit</Title>
-                    <Text ta="center" fw={500} size='22px'>
-                        Empower Your dApp: Seamlessly Load Starknet Tokens with Token Kit
-                    </Text>
-                    <Card bg={theme.colors.violet[7]} radius={'lg'} p={'50px'}>
-                        <Stack>
-                            <Title order={2} ta={'center'}>Try Me!</Title>
-                            <Group justify='center'>
-                                <SelectToken />
-                            </Group>
-                        </Stack>
-                    </Card>
-                </Stack>
-            </Box>
-            <Box>
-                <Stack>
-                    <Title order={2} size={'62px'} ta={'center'}>Create Your Own Modal Styling</Title>
-                    <SelectTokenModalThemeCreator />
-                </Stack>
-            </Box>
-            <Grid py={'50px'}>
-                <Grid.Col span={{ md: 8 }}>
-                    <Grid>
-                        <Grid.Col span={{ md: 12 }}>
+        <Container size={'xl'} py="50px">
+            <Stack>
+                <Box mih={'50dvh'}>
+                    <Stack justify='center' className='h-100'>
+                        <Image src={"/assets/images/logo/starknet.png"} w={'300px'} maw={'400px'} mx={"auto"} />
+                        <Title ta={'center'} fw={700} size={'100px'}>Token Kit</Title>
+                        <Text ta="center" fw={500} size='22px'>
+                            Empower Your dApp: Seamlessly Load Starknet Tokens with Token Kit
+                        </Text>
+                        <Card bg={theme.colors.violet[7]} radius={'lg'} p={'50px'}>
                             <Stack>
-
-                                <Title order={2} size={'62px'} ta={'center'}>What is Tokenkit</Title>
-                                <Text fw={500} size='md'>
-                                    Tokenkit is a package that keeps track of tokens listed on the tokenkit contract and displays them through a modal and a token container while the tokens keep getting autoupdated for users of your dapp.
-                                </Text>
-                                <Text fw={500} size='md'>
-                                    Tokenkit makes it easy to add a working modal and a container of tokens to your dapp making it easy and fast for you to focus on core business logic.
-                                </Text>
+                                <Title order={2} ta={'center'}>Try Me!</Title>
+                                <Group justify='center'>
+                                    <SelectToken />
+                                </Group>
                             </Stack>
-                        </Grid.Col>
-                        <Grid.Col span={{ md: 12 }}>
-                            <Title order={2} size={'62px'} ta={'center'}>How To</Title>
-                        </Grid.Col>
-                        <Grid.Col span={{ md: 12 }}>
-                            <Stack gap={'30px'}>
-                                <Title order={2}>Installation</Title>
-                                <Text>
-                                    To install Starknet Token Kit simply use the commands below.
-                                </Text>
-                                <CustomBoxWithRadius>
-                                    <CodeHighlightTabs
-                                        expandCodeLabel="Show full code"
-                                        collapseCodeLabel="Show less"
-                                        code={[
-                                            { fileName: 'Yarn', code: `yarn add starknet-tokenkit`, language: 'django' },
-                                            { fileName: 'Npm', code: `npm i starknet-tokenkit`, language: 'shell' },
-                                        ]}
-                                    />
-                                </CustomBoxWithRadius>
-                                <Title order={2}>Setting Up your Application</Title>
-                                <Text>Starknet Token Kit exposes a <InlineCodeHighlight code='<TokenKitWrapper />' /> component that you need to wrap your app with as below. </Text>
-                                <CustomBoxWithRadius>
-                                    <CodeHighlight code={wrapperCode} />
-                                </CustomBoxWithRadius>
-                            </Stack>
-                        </Grid.Col>
-                        <Grid.Col span={{ md: 12 }}>
-                            <Stack gap={'30px'}>
-                                <Title order={2}>Usage</Title>
-                                <Text>
-                                    The token kit exposes some components and functions that you can use to achieve different functionality ranging from selecting tokens to converting data ie
-                                    {' '}  <InlineCodeHighlight code='hexadecimals' /> to readable strings.
-                                </Text>
-                                <Grid>
-                                    <Grid.Col span={{ md: 12 }}>
+                        </Card>
+                    </Stack>
+                </Box>
+                <Box>
+                    <Stack>
+                        <Title order={2} size={'62px'} ta={'center'}>Create Your Own Modal Styling</Title>
+                        <SelectTokenModalThemeCreator />
+                    </Stack>
+                </Box>
+                <Grid py={'50px'}>
+                    <Grid.Col span={{ md: 8 }}>
+                        <Grid>
+                            <Grid.Col span={{ md: 12 }}>
+                                <Stack>
+
+                                    <Title order={2} size={'62px'} ta={'center'}>What is Tokenkit</Title>
+                                    <Text fw={500} size='md'>
+                                        Tokenkit is a package that keeps track of tokens listed on the tokenkit contract and displays them through a modal and a token container while the tokens keep getting autoupdated for users of your dapp.
+                                    </Text>
+                                    <Text fw={500} size='md'>
+                                        Tokenkit makes it easy to add a working modal and a container of tokens to your dapp making it easy and fast for you to focus on core business logic.
+                                    </Text>
+                                </Stack>
+                            </Grid.Col>
+                            <Grid.Col span={{ md: 12 }}>
+                                <Title order={2} size={'62px'} ta={'center'}>How To</Title>
+                            </Grid.Col>
+                            <Grid.Col span={{ md: 12 }}>
+                                <Stack gap={'30px'}>
+                                    <Title order={2}>Installation</Title>
+                                    <Text>
+                                        To install Starknet Token Kit simply use the commands below.
+                                    </Text>
+                                    <CustomBoxWithRadius>
+                                        <CodeHighlightTabs
+                                            expandCodeLabel="Show full code"
+                                            collapseCodeLabel="Show less"
+                                            code={[
+                                                { fileName: 'Yarn', code: `yarn add starknet-tokenkit`, language: 'django' },
+                                                { fileName: 'Npm', code: `npm i starknet-tokenkit`, language: 'shell' },
+                                            ]}
+                                        />
+                                    </CustomBoxWithRadius>
+                                    <Title order={2}>Setting Up your Application</Title>
+                                    <Title order={4}>Styling object</Title>
+                                    <Text>Style your modal to match your theme!</Text>
+                                    <CustomBoxWithRadius>
+                                        <CodeHighlight code={stylingObject} language='ts' />
+                                    </CustomBoxWithRadius>
+                                    <Text>Starknet Token Kit exposes a <InlineCodeHighlight code='<TokenKitWrapper />' /> component that you need to wrap your app with as below. </Text>
+                                    <CustomBoxWithRadius>
+                                        <CodeHighlight code={wrapperCode} />
+                                    </CustomBoxWithRadius>
+                                </Stack>
+                            </Grid.Col>
+                            <Grid.Col span={{ md: 12 }}>
+                                <Stack gap={'30px'}>
+                                    <Title order={2}>Usage</Title>
+                                    <Text>
+                                        The token kit exposes some components and functions that you can use to achieve different functionality ranging from selecting tokens to converting data ie
+                                        {' '}  <InlineCodeHighlight code='hexadecimals' /> to readable strings.
+                                    </Text>
+                                    <Grid>
+                                        <Grid.Col span={{ md: 12 }}>
+                                            <Stack>
+                                                <Title order={4}>Create your modal</Title>
+                                                <Text>Import the SelectTokenModal component to create your component</Text>
+                                                <CustomBoxWithRadius>
+                                                    <CodeHighlight code={usageCode} language='tsx' />
+                                                </CustomBoxWithRadius>
+                                            </Stack>
+                                        </Grid.Col>
+                                    </Grid>
+
+                                    <Title order={2}>On Page Usage</Title>
+                                    <Text>
+                                        Now you can import your component and use it in your page as below.
+                                    </Text>
+                                    <CustomBoxWithRadius>
+                                        <CodeHighlight code={pageCode} language='tsx' />
+                                    </CustomBoxWithRadius>
+                                    <Card bg={theme.colors.dark[8]} radius={'lg'} p={'50px'}>
                                         <Stack>
-                                            <Title order={4}>Styling object</Title>
-                                            <Text>Style your modal to match your theme!</Text>
-                                            <CustomBoxWithRadius>
-                                                <CodeHighlight code={stylingObject} language='ts' />
-                                            </CustomBoxWithRadius>
+                                            <Title order={2} ta={'center'}>Output will be as below</Title>
+                                            <Group justify='center'>
+                                                <SelectToken />
+                                            </Group>
                                         </Stack>
-                                    </Grid.Col>
-                                    <Grid.Col span={{ md: 12 }}>
-                                        <Stack>
-                                            <Title order={4}>Create your modal</Title>
-                                            <Text>Import the SelectTokenModal component to create your component</Text>
-                                            <CustomBoxWithRadius>
-                                                <CodeHighlight code={usageCode} language='tsx' />
-                                            </CustomBoxWithRadius>
-                                        </Stack>
-                                    </Grid.Col>
-                                </Grid>
+                                    </Card>
 
-                                <Title order={2}>On Page Usage</Title>
-                                <Text>
-                                    Now you can import your component and use it in your page as below.
-                                </Text>
-                                <CustomBoxWithRadius>
-                                    <CodeHighlight code={pageCode} language='tsx' />
-                                </CustomBoxWithRadius>
-                                <Card bg={theme.colors.dark[8]} radius={'lg'} p={'50px'}>
-                                    <Stack>
-                                        <Title order={2} ta={'center'}>Output will be as below</Title>
-                                        <Group justify='center'>
-                                            <SelectToken />
-                                        </Group>
-                                    </Stack>
-                                </Card>
+                                    <Title order={2}>Using the SelectTokenContainer </Title>
+                                    <Text>
+                                        Select token container allows to embed the modal in a page. This can be used in instances that you don't intend to use a modal.
+                                    </Text>
+                                    <Text>
+                                        For this case, an example usage is what we have used above where we create a theme for our modal.
+                                    </Text>
+                                    <CustomBoxWithRadius>
+                                        <CodeHighlight code={selectTokenContainerCode} language='tsx' />
+                                    </CustomBoxWithRadius>
 
-                                <Title order={2}>Using the SelectTokenContainer </Title>
-                                <Text>
-                                    Select token container allows to embed the modal in a page. This can be used in instances that you don't intend to use a modal.
-                                </Text>
-                                <Text>
-                                    For this case, an example usage is what we have used above where we create a theme for our modal.
-                                </Text>
-                                <CustomBoxWithRadius>
-                                    <CodeHighlight code={selectTokenContainerCode} language='tsx' />
-                                </CustomBoxWithRadius>
-
-                                {/* <Title order={2}>Next JS Setup</Title>
+                                    {/* <Title order={2}>Next JS Setup</Title>
                                 <Text>
                                     Using next js checkout <Anchor href='https://vercel.com/guides/react-context-state-management-nextjs' target='_blank'>here</Anchor>
                                 </Text> */}
 
-                            </Stack>
-                        </Grid.Col>
-                    </Grid>
-                </Grid.Col>
-                <Grid.Col span={{ md: 4 }}>
-                    <Image src={'/assets/images/modal.png'} radius={'lg'} />
-                </Grid.Col>
-            </Grid>
-            {/* <ConnectWalletBtn />
+                                </Stack>
+                            </Grid.Col>
+                        </Grid>
+                    </Grid.Col>
+                    <Grid.Col span={{ md: 4 }}>
+                        <Image src={'/assets/images/modal.png'} radius={'lg'} />
+                    </Grid.Col>
+                </Grid>
+                {/* <ConnectWalletBtn />
             <TokensTable />
             <AddAdminForm />
             <div>
                 <SelectToken />
             </div> */}
-        </Stack>
+            </Stack>
+        </Container>
     )
 }
 

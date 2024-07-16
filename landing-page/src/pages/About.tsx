@@ -1,4 +1,4 @@
-import { ActionIcon, Anchor, Avatar, Card, Center, Grid, Group, Stack, Text, Title, em } from '@mantine/core'
+import { ActionIcon, Anchor, Avatar, Card, Center, Container, Grid, Group, Stack, Text, Title, em } from '@mantine/core'
 import { limitChars } from '../configs/utils'
 import { IconBrandGithub, IconBrandLinkedin, IconBrandTelegram, IconBrandTwitter } from '@tabler/icons-react'
 
@@ -96,36 +96,38 @@ const About = () => {
     const bg = "white"
     const color = "black"
     return (
-        <Stack>
-            <Card radius={"lg"} bg={bg}>
-                <Stack>
-                    <Title ta={"center"} c={color}>About Tokenkit</Title>
-                    <Text c={color}>
-                        Tokenkit is a package for Starknet developers that simplifies token management in decentralized finance (DeFi) applications.
-                    </Text>
-                    <Text c={color}>
-                        It provides a comprehensive and dynamic list of tokens, enabling easy integration and interaction with these tokens within dapps.
-                    </Text>
-                    <Text c={color}>
-                        Additionally, Tokenkit allows newly deployed tokens to be listed and made visible across all dapps using the package. This enhances user experience, streamlines development, promotes standardization, and supports the growth and scalability of the Starknet ecosystem.
-                    </Text>
-                </Stack>
-            </Card>
-            <Card radius={"lg"} bg={bg}>
-                <Stack>
-                    <Title ta={"center"} c={color}>Team</Title>
-                    <Grid>
-                        {
-                            teamMembers?.map((member: ITeamMember, i: number) => (
-                                <Grid.Col key={`member_${i}`} span={{ md: 4 }}>
-                                    <TeamMember {...member} />
-                                </Grid.Col>
-                            ))
-                        }
-                    </Grid>
-                </Stack>
-            </Card>
-        </Stack>
+        <Container size={"xl"}>
+            <Stack>
+                <Card radius={"lg"} bg={bg}>
+                    <Stack>
+                        <Title ta={"center"} c={color}>About Tokenkit</Title>
+                        <Text c={color}>
+                            Tokenkit is a package for Starknet developers that simplifies token management in decentralized finance (DeFi) applications.
+                        </Text>
+                        <Text c={color}>
+                            It provides a comprehensive and dynamic list of tokens, enabling easy integration and interaction with these tokens within dapps.
+                        </Text>
+                        <Text c={color}>
+                            Additionally, Tokenkit allows newly deployed tokens to be listed and made visible across all dapps using the package. This enhances user experience, streamlines development, promotes standardization, and supports the growth and scalability of the Starknet ecosystem.
+                        </Text>
+                    </Stack>
+                </Card>
+                <Card radius={"lg"} bg={bg}>
+                    <Stack>
+                        <Title ta={"center"} c={color}>Team</Title>
+                        <Grid>
+                            {
+                                teamMembers?.map((member: ITeamMember, i: number) => (
+                                    <Grid.Col key={`member_${i}`} span={{ md: 4 }}>
+                                        <TeamMember {...member} />
+                                    </Grid.Col>
+                                ))
+                            }
+                        </Grid>
+                    </Stack>
+                </Card>
+            </Stack>
+        </Container>
     )
 }
 

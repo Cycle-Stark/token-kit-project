@@ -1,4 +1,4 @@
-import { Stack, Title, Grid, NumberInput, TextInput, Switch, Button, Loader, ActionIcon } from "@mantine/core"
+import { Stack, Title, Grid, NumberInput, TextInput, Switch, Button, Loader, ActionIcon, Tooltip, Alert } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { showNotification } from "@mantine/notifications"
 import { IconCheck, IconAlertTriangle, IconWriting, IconUpload, IconInfoCircle, IconShield } from "@tabler/icons-react"
@@ -15,7 +15,7 @@ interface IUpdateTokenForm {
 
 export const UpdateTokenForm = (props: IUpdateTokenForm) => {
     const { data } = props
-    const { contract, reloadTokensFromContract } = useTokenKitContext()
+    const { contract, reloadTokensFromContract, account } = useTokenKitContext()
 
     const [loading, setLoading] = useState(false)
 
@@ -39,25 +39,31 @@ export const UpdateTokenForm = (props: IUpdateTokenForm) => {
             call_data.icon_link = form.values.icon_link
             const myCall = contract.populate('edit_token', call_data)
 
-            contract.edit_token(myCall.calldata).then((_res: any) => {
-                showNotification({
-                    title: 'Update',
-                    message: `Update Succesful`,
-                    color: 'green',
-                    icon: <IconCheck />
-                })
-                reloadTokensFromContract && reloadTokensFromContract()
-            }).catch((err: any) => {
-                showNotification({
-                    title: 'Update failed',
-                    message: `${err}`,
-                    color: 'red',
-                    icon: <IconAlertTriangle />
-                })
-
-            }).finally(() => {
-                setLoading(false)
+            // contract.edit_token(myCall.calldata)
+            account.execute({
+                contractAddress: contract.address,
+                entrypoint: 'edit_token',
+                calldata: myCall.calldata
             })
+                .then((_res: any) => {
+                    showNotification({
+                        title: 'Update',
+                        message: `Update Succesful`,
+                        color: 'green',
+                        icon: <IconCheck />
+                    })
+                    reloadTokensFromContract && reloadTokensFromContract()
+                }).catch((err: any) => {
+                    showNotification({
+                        title: 'Update failed',
+                        message: `${err}`,
+                        color: 'red',
+                        icon: <IconAlertTriangle />
+                    })
+
+                }).finally(() => {
+                    setLoading(false)
+                })
         }
     }
 
@@ -66,6 +72,9 @@ export const UpdateTokenForm = (props: IUpdateTokenForm) => {
         <form onSubmit={form.onSubmit(_values => handleSubmit())}>
             <Stack>
                 <Title order={3}>Update Token</Title>
+                <Alert color="yellow" radius={'md'} icon={<IconAlertTriangle />}>
+                    Only admins/guardians can call this method!
+                </Alert>
                 <Grid>
                     <Grid.Col span={{ md: 12 }}>
                         <NumberInput disabled label="Token Index" placeholder="Token Index" radius={'md'} {...form.getInputProps('token_index')} />
@@ -80,7 +89,7 @@ export const UpdateTokenForm = (props: IUpdateTokenForm) => {
                         <Switch label="Verified" radius={'md'} {...form.getInputProps('verified', { type: 'checkbox' })} />
                     </Grid.Col>
                     <Grid.Col span={{ md: 12 }}>
-                        <TextInput label="Icon Link" placeholder="https://shortlink/xysx" radius={'md'} {...form.getInputProps('icon_link')} maxLength={29} />
+                        <TextInput label="Icon Link" placeholder="https://shortlink/xysx" radius={'md'} {...form.getInputProps('icon_link')} maxLength={30} />
                     </Grid.Col>
                     <Grid.Col span={{ md: 12 }}>
                         <Button radius={'md'} type="submit" leftSection={loading ? <Loader size="sm" color="white" /> : <IconWriting size={'18px'} />} rightSection={loading ? <Loader color="white" size={'sm'} /> : null}>Update Token</Button>
@@ -93,7 +102,7 @@ export const UpdateTokenForm = (props: IUpdateTokenForm) => {
 
 export const ListTokenForm = () => {
     const [loading, setLoading] = useState(false)
-    const { contract, reloadTokensFromContract } = useTokenKitContext()
+    const { contract, reloadTokensFromContract, account } = useTokenKitContext()
     const [contract_, setContract] = useState<any>(contract)
 
     // console.log(contract_)
@@ -104,7 +113,14 @@ export const ListTokenForm = () => {
         },
         validate: {
             address: val => val === '' ? 'Token Address is required' : null,
-            icon_link: val => val === '' ? 'Icon link is required' : null
+            icon_link: val => {
+                if (val === '') {
+                    return 'Icon link is required'
+                }
+                else if (val.length > 30) {
+                    return "URL can't exceed 30 Characters"
+                }
+            }
         }
     })
 
@@ -114,25 +130,30 @@ export const ListTokenForm = () => {
             call_data.icon_link = form.values.icon_link
             const myCall = contract_.populate('add_token', call_data)
 
-            contract_.add_token(myCall.calldata).then((_res: any) => {
-                showNotification({
-                    title: 'Token Listing',
-                    message: `Token Added Succesfully`,
-                    color: 'green',
-                    icon: <IconCheck />
-                })
-                reloadTokensFromContract && reloadTokensFromContract()
-            }).catch((err: any) => {
-                showNotification({
-                    title: 'Token listing failed',
-                    message: `${err}`,
-                    color: 'red',
-                    icon: <IconAlertTriangle />
-                })
-
-            }).finally(() => {
-                setLoading(false)
+            account.execute({
+                contractAddress: contract_.address,
+                entrypoint: 'add_token',
+                calldata: myCall.calldata
             })
+                .then((_res: any) => {
+                    showNotification({
+                        title: 'Token Listing',
+                        message: `Token Added Succesfully`,
+                        color: 'green',
+                        icon: <IconCheck />
+                    })
+                    reloadTokensFromContract && reloadTokensFromContract()
+                }).catch((err: any) => {
+                    showNotification({
+                        title: 'Token listing failed',
+                        message: `${err}`,
+                        color: 'red',
+                        icon: <IconAlertTriangle />
+                    })
+
+                }).finally(() => {
+                    setLoading(false)
+                })
         }
     }
 
@@ -149,7 +170,7 @@ export const ListTokenForm = () => {
                         <TextInput label="Token Address" placeholder="Token Address" radius={'md'} {...form.getInputProps('address')} />
                     </Grid.Col>
                     <Grid.Col span={{ md: 12 }}>
-                        <TextInput label="Icon Link" placeholder="https://shortlink/xysx" {...form.getInputProps('icon_link')} maxLength={29} radius={'md'} />
+                        <TextInput label="Icon Link" placeholder="https://shortlink/xysx" {...form.getInputProps('icon_link')} maxLength={30} radius={'md'} />
                     </Grid.Col>
                     <Grid.Col span={{ md: 12 }}>
                         <Button radius={'md'} type="submit" leftSection={<IconUpload size={'18px'} />} rightSection={loading ? <Loader color="white" size={'sm'} /> : null}>List Token</Button>
@@ -230,9 +251,11 @@ export const VerifyTokenBtn = (props: IVerifyTokenBtn) => {
     }
 
     return (
-        <ActionIcon onClick={() => handleVerify()} loading={loading}>
-            <IconShield />
-        </ActionIcon>
+        <Tooltip label={`Verify Token`} radius={'md'}>
+            <ActionIcon onClick={() => handleVerify()} loading={loading} variant='light' size={'lg'} radius={'xl'} color="pink">
+                <IconShield size={'20px'} />
+            </ActionIcon>
+        </Tooltip>
     )
 }
 

@@ -6,6 +6,7 @@ export interface ICustomNavLinkProps {
     to: string
     title: string
     icon: any
+    target?: string
 }
 
 export const navlinks = [
@@ -28,16 +29,22 @@ export const navlinks = [
         title: 'About',
         to: '/about',
         icon: <IconInfoCircle style={{ width: rem(14), height: rem(14) }} />
+    },
+    {
+        title: 'Docs',
+        to: 'https://tokenkit-docs.vercel.app',
+        icon: <IconInfoCircle style={{ width: rem(14), height: rem(14) }} />,
+        target: '_blank'
     }
 ]
 
 
-const CustomNavLink = ({ to, title }: ICustomNavLinkProps) => {
+const CustomNavLink = ({ to, title, target }: ICustomNavLinkProps) => {
     let resolved = useResolvedPath(to);
     let match = useMatch({ path: resolved.pathname, end: true });
 
     return (
-        <Text component={NavLink} to={to} variant={match ? 'filled' : 'outline'} fw={500} fs={"16px"} style={theme => ({
+        <Text component={NavLink} target={target} to={to} variant={match ? 'filled' : 'outline'} fw={500} fs={"16px"} style={theme => ({
             color: match ? theme.colors.orange[6] : "white"
         })}>
             {title}
