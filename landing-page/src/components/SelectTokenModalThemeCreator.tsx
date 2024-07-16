@@ -66,9 +66,9 @@ const SelectTokenModalThemeCreator = () => {
         ...form.values
     }), [form.values])
 
-    useEffect(() => {
-        tryStyle()
-    }, [ifChanged])
+    // useEffect(() => {
+    //     tryStyle()
+    // }, [ifChanged])
 
     return (
         <div>
