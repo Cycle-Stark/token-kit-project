@@ -1,26 +1,13 @@
 import React, { ReactNode } from 'react';
 import Dexie, { Table } from 'dexie';
 
-interface IModalThemeObject {
-    r: string;
-    textColor: string;
-    headerFooterBg: string;
-    backgroundColor: string;
-    fontFamily: string;
-    searchBackground: string;
-    searchColor: string;
-    searchBorderColor: string;
-    searchFocusBorderColor: string;
-    primaryColor: string;
-}
 interface IModalProps {
-    themeObject: IModalThemeObject;
     selectedToken: IToken | undefined;
     children?: ReactNode;
     callBackFunc: (token: IToken) => void;
     modalHeight?: string;
+    animation?: 'bounce' | 'slide' | 'ease' | 'fade';
 }
-
 interface IToken {
     address: string;
     name: string;
@@ -33,11 +20,24 @@ interface IToken {
     id?: number;
     price?: any;
 }
+interface IModalThemeObject {
+    r: string;
+    textColor: string;
+    headerFooterBg: string;
+    backgroundColor: string;
+    fontFamily: string;
+    searchBackground: string;
+    searchColor: string;
+    searchBorderColor: string;
+    searchFocusBorderColor: string;
+    primaryColor: string;
+}
 interface ITokenKitWrapper {
     children: ReactNode;
     network: 'SN_MAIN' | 'SN_SEPOLIA';
     mainnetNodeURL: string;
     sepoliaNodeURL: string;
+    themeObject: IModalThemeObject;
 }
 interface TokensDBInfo {
     id: 1;

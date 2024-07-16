@@ -16,7 +16,7 @@ To use Tokenkit, its pretty easy, first you import the `TokenKitWrapper` and wra
 
 ```tsx
 import { TokenKitWrapper } from 'starknet-tokenkit'
-
+import 'starknet-tokenkit/dist/index.css' // Remember to import styling, otherwise, everything will fail
 
 /*
 @params
@@ -81,6 +81,7 @@ Remember to use all the keys given here with different colors to match your over
 
 ```ts
 const stylingObject = {
+    r: "20px",
     textColor: "white",
     headerFooterBg: "rgba(0, 0, 0, 0.28)",
     backgroundColor: "#06a5a3",
@@ -143,8 +144,23 @@ const SwapPage = () => {
         </div>
     )
 }
-```
+``` 
 
+## Using the SelectTokenContainer
+
+Select token container allows to embed the modal in a page. This can be used in instances that you don't intend to use a modal.
+
+For this case, an example usage is what we have used above where we create a theme for our modal.
+
+```tsx
+<SelectTokenContainer
+    selectedToken={SelectedToken} // Pass a selected token as when creating a modal
+    callBackFunc={setSelectedToken} // Pass a call back function that will update the selected token
+    themeObject={stylingObject} // Pass in the styling object
+    modalHeight="700px"  // Always pass the height.
+/>
+```
+ 
 ### Extra helpful functions
 
 This package also provides  other few functions that can be used in differente scenarios ie 

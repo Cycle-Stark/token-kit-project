@@ -1,71 +1,190 @@
+/* src/styles/animations.css */
+.tokenkit-dialog {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.tokenkit-dialog[open] {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tokenkit-dialog.slide-down {
+  animation: slide-down 0.5s forwards;
+}
+.tokenkit-dialog.slide-up {
+  animation: slide-up 0.5s forwards;
+}
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slide-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+.tokenkit-dialog.ease-slide {
+  animation: ease-slide-down 0.5s forwards;
+}
+.tokenkit-dialog.ease-slide-up {
+  animation: ease-slide-up 0.5s forwards;
+}
+@keyframes ease-slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+    easing: ease-in;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    easing: ease-out;
+  }
+}
+@keyframes ease-slide-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+    easing: ease-out;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+    easing: ease-in;
+  }
+}
+.tokenkit-dialog.bounce-slide {
+  animation: bounce-slide-down 0.7s forwards;
+}
+.tokenkit-dialog.bounce-slide-up {
+  animation: bounce-slide-up 0.7s forwards;
+}
+@keyframes bounce-slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(20%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes bounce-slide-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateY(20%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+.tokenkit-dialog.fade-slide {
+  animation: fade-slide-down 0.5s forwards;
+}
+.tokenkit-dialog.fade-slide-up {
+  animation: fade-slide-up 0.5s forwards;
+}
+@keyframes fade-slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fade-slide-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+}
+
 /* src/styles/style.css */
 .tokenkit-wrapper {
-  --modal-content-height: 95dvh;
-  --modal-header-height: 60px;
-  --modal-footer-height: 60px;
-  --search-common-box-height: 160px;
-  --common-tokens-list-height: 60px;
-  --token-btn-height: 30px;
+  --tokenkit-modal-header-height: 60px;
+  --tokenkit-modal-footer-height: 60px;
+  --tokenkit-search-common-box-height: 160px;
+  --tokenkit-common-tokens-list-height: 60px;
+  --tokenkit-token-btn-height: 30px;
+  position: relative;
+}
+.tokenkit-dialog {
+  height: var(--tokenkit-modal-content-height);
+  min-height: var(--tokenkit-modal-content-height);
+  max-height: var(--tokenkit-modal-content-height);
+  overflow: hidden;
+  background: #000 !important;
+}
+.tokenkit-dialog.custom-modal-content {
+  height: var(--tokenkit-modal-content-height);
+}
+.tokenkit-dialog,
+.custom-modal-content {
+  overflow: hidden;
+  width: 450px;
+  margin: auto !important;
+  max-width: 95dvw;
+  height: var(--tokenkit-modal-content-height);
+  background-color: var(--tokenkit-bg-color);
+  transition: all 0.3s ease-in-out;
+  border-radius: var(--tokenkit-border-radius);
+  overscroll-behavior: contain;
+  border: none;
+}
+.tokenkit-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 .tokenkit-wrapper * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
-.custom-modal {
-  font-family: var(--font-family) !important;
-  color: var(--text-color);
-  z-index: 10000;
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-  pointer-events: none;
-}
-.custom-modal.show {
-  opacity: 1;
-  pointer-events: visible;
-}
-.custom-modal.show .custom-modal-content {
-  transform: translateY(0);
-}
-.custom-modal-content {
-  width: 450px;
-  max-width: 95dvw;
-  background-color: var(--bg-color);
-  transform: translateY(-200px);
-  transition: all 0.3s ease-in-out;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-}
 .select-container {
   height: 100%;
-}
-.select-container .custom-modal-content {
-  transform: translateY(0);
+  position: relative;
 }
 .custom-modal-header,
 .custom-modal-footer {
   padding: 10px;
-  background-color: var(--header-footer-bg);
+  background-color: var(--tokenkit-header-footer-bg);
 }
 .custom-modal-header {
-  height: var(--modal-header-height);
-  max-height: var(--modal-header-height);
+  height: var(--tokenkit-modal-header-height);
+  max-height: var(--tokenkit-modal-header-height);
 }
 .custom-modal-footer {
-  height: var(--modal-footer-height);
-  max-height: var(--modal-footer-height);
+  height: var(--tokenkit-modal-footer-height);
+  max-height: var(--tokenkit-modal-footer-height);
 }
 .custom-modal-header {
-  color: var(--text-color) !important;
+  color: var(--tokenkit-text-color) !important;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -80,8 +199,8 @@
   column-gap: 10px;
 }
 .chain-id {
-  background-color: var(--search-bg);
-  color: var(--text-color);
+  background-color: var(--tokenkit-search-bg);
+  color: var(--tokenkit-text-color);
   border-radius: 10px;
   font-size: 12px;
   padding: 4px 6px;
@@ -89,13 +208,13 @@
   pointer-events: none;
 }
 .right .close {
-  --size: 30px;
+  --tokenkit-size: 30px;
   border: none;
-  background-color: var(--search-bg);
-  width: var(--size);
-  height: var(--size);
-  min-width: var(--size);
-  max-height: var(--size);
+  background-color: var(--tokenkit-search-bg);
+  width: var(--tokenkit-size);
+  height: var(--tokenkit-size);
+  min-width: var(--tokenkit-size);
+  max-height: var(--tokenkit-size);
   border-radius: 50%;
   padding: 6px;
   display: flex;
@@ -107,30 +226,33 @@
   cursor: pointer;
 }
 .close-svg {
-  fill: var(--text-color);
+  fill: var(--tokenkit-text-color);
 }
 .custom-modal-body {
-  height: calc(100% - (var(--modal-header-height) + var(--modal-footer-height)));
+  height: calc(100% - (var(--tokenkit-modal-header-height) + var(--tokenkit-modal-footer-height)));
 }
 .custom-modal-body .search-common-box {
-  height: var(--search-common-box-height);
-  background-color: var(--header-footer-bg);
+  height: var(--tokenkit-search-common-box-height);
+  background-color: var(--tokenkit-header-footer-bg);
   padding: 10px;
 }
 .search-common-box .custom-search-input {
   width: 100%;
   display: block;
-  border: 2px solid var(--search-border-color);
+  border: 2px solid var(--tokenkit-search-border-color);
   outline: none;
   border-radius: 20px;
   padding: 8px 15px;
-  background-color: var(--search-bg);
-  color: var(--search-color);
+  background-color: var(--tokenkit-search-bg);
+  color: var(--tokenkit-search-color);
   font-size: 14px;
   font-weight: 500;
 }
+.search-common-box .custom-search-input::placeholder {
+  color: "red";
+}
 .search-common-box .custom-search-input:focus {
-  border: 2px solid var(--search-focus-border-color);
+  border: 2px solid var(--tokenkit-search-focus-border-color);
 }
 .search-common-box .common-tokens {
   margin-top: 10px;
@@ -138,7 +260,7 @@
 .search-common-box .common-tokens h5 {
   font-weight: 500;
   line-height: 1.35;
-  color: var(--text-color);
+  color: var(--tokenkit-text-color);
   font-size: 16px;
 }
 .common-tokens-list {
@@ -149,7 +271,7 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   column-gap: 10px;
-  height: var(--common-tokens-list-height);
+  height: var(--tokenkit-common-tokens-list-height);
   padding-bottom: 4px;
 }
 .common-tokens-list::-webkit-scrollbar {
@@ -164,12 +286,12 @@
 }
 .common-tokens-list::-webkit-scrollbar-thumb {
   height: 6px;
-  background: var(--search-bg);
+  background: var(--tokenkit-search-bg);
   border-radius: 10px;
 }
 .token-btn,
 .token-list-item {
-  color: var(--text-color) !important;
+  color: var(--tokenkit-text-color) !important;
   display: flex;
   align-items: center;
   column-gap: 4px;
@@ -184,30 +306,30 @@
 }
 .token-btn {
   justify-content: center;
-  height: var(--token-btn-height);
+  height: var(--tokenkit-token-btn-height);
 }
 .token-btn:hover,
 .token-list-item:hover {
-  background-color: var(--header-footer-bg) !important;
+  background-color: var(--tokenkit-header-footer-bg) !important;
 }
 .token-btn .logo-holder,
 .token-list-item .logo-holder {
-  --size: 30px;
-  width: var(--size);
-  min-width: var(--size);
-  width: var(--size);
-  height: var(--size);
-  max-width: var(--size);
+  --tokenkit-size: 30px;
+  width: var(--tokenkit-size);
+  min-width: var(--tokenkit-size);
+  width: var(--tokenkit-size);
+  height: var(--tokenkit-size);
+  max-width: var(--tokenkit-size);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2px;
   overflow: hidden;
-  background-color: var(--header-footer-bg);
+  background-color: var(--tokenkit-header-footer-bg);
 }
 .token-list-item .logo-holder {
-  --size: 40px;
+  --tokenkit-size: 40px;
 }
 .token-btn .logo-holder .logo,
 .token-list-item .logo-holder .logo {
@@ -215,7 +337,7 @@
   max-height: 100%;
 }
 .rest-of-tokens {
-  height: calc(100% - var(--search-common-box-height));
+  height: calc(100% - var(--tokenkit-search-common-box-height));
   overflow-Y: auto;
   padding: 10px;
   display: flex;
@@ -234,7 +356,7 @@
 }
 .rest-of-tokens::-webkit-scrollbar-thumb {
   height: 6px;
-  background: var(--search-bg);
+  background: var(--tokenkit-search-bg);
   border-radius: 10px;
 }
 .token-list-item .token-content {
@@ -267,11 +389,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--text-color) !important;
+  color: var(--tokenkit-text-color) !important;
 }
 .custom-modal-footer .top a,
 .custom-modal-footer .bottom a {
-  color: var(--primary-color);
+  color: var(--tokenkit-primary-color);
   text-decoration: none;
 }
 .custom-modal-footer .top a:hover,
@@ -292,11 +414,11 @@
   text-align: center;
   font-size: 14px;
   font-weight: 400;
-  color: var(--text-color);
+  color: var(--tokenkit-text-color);
   width: 100%;
 }
 .no-tokens a {
-  color: var(--primary-color);
+  color: var(--tokenkit-primary-color);
   text-decoration: none;
 }
 .no-tokens a:hover {

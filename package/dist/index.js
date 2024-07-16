@@ -45,6 +45,16 @@ module.exports = __toCommonJS(src_exports);
 
 // src/components/Modal.tsx
 var import_react3 = __toESM(require("react"));
+
+// src/types.ts
+var animationGroups = {
+  slide: { in: "slide-down", out: "slide-up" },
+  ease: { in: "ease-slide", out: "ease-slide-up" },
+  bounce: { in: "bounce-slide", out: "bounce-slide-up" },
+  fade: { in: "fade-slide", out: "fade-slide-up" }
+};
+
+// src/components/Modal.tsx
 var import_dexie_react_hooks = require("dexie-react-hooks");
 
 // src/configs/db.ts
@@ -521,7 +531,7 @@ var TokenBtn = ({ token, select, selectedToken }) => {
   };
   return /* @__PURE__ */ import_react3.default.createElement("div", { className: "token-btn", onClick: selectToken, style: {
     pointerEvents: token.address === selectedToken?.address ? "none" : "all",
-    background: token?.address === selectedToken?.address ? "var(--header-footer-bg)" : "transparent"
+    background: token?.address === selectedToken?.address ? "var(--tokenkit-header-footer-bg)" : "transparent"
   } }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "logo-holder" }, renderInitials ? /* @__PURE__ */ import_react3.default.createElement("p", { style: { textTransform: "uppercase", fontSize: "16px" } }, limitChars(token?.symbol, 2, false)) : /* @__PURE__ */ import_react3.default.createElement("img", { src: token.icon ?? "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Tether-USDT-icon.png", onError: imageloadOnError, alt: "", className: "logo" })), /* @__PURE__ */ import_react3.default.createElement("p", null, token?.symbol));
 };
 var TokenListItem = ({ token, select, selectedToken }) => {
@@ -548,12 +558,11 @@ var TokenListItem = ({ token, select, selectedToken }) => {
   };
   return /* @__PURE__ */ import_react3.default.createElement("div", { className: "token-list-item", onClick: selectToken, style: {
     pointerEvents: token.address === selectedToken?.address ? "none" : "all",
-    background: token?.address === selectedToken?.address ? "var(--header-footer-bg)" : "transparent"
+    background: token?.address === selectedToken?.address ? "var(--tokenkit-header-footer-bg)" : "transparent"
   } }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "logo-holder" }, renderInitials ? /* @__PURE__ */ import_react3.default.createElement("p", { style: { textTransform: "uppercase", fontSize: "16px" } }, limitChars(token?.symbol, 2, false)) : /* @__PURE__ */ import_react3.default.createElement("img", { src: token.icon ?? "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Tether-USDT-icon.png", onError: imageloadOnError, alt: "", className: "logo" })), /* @__PURE__ */ import_react3.default.createElement("div", { className: "token-content" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "symbol-holder" }, /* @__PURE__ */ import_react3.default.createElement("p", { className: "symbol" }, token?.symbol), getImageUrl() ? /* @__PURE__ */ import_react3.default.createElement("img", { src: getImageUrl()?.badge, height: "14px", title: getImageUrl()?.msg, width: "14px" }) : null), /* @__PURE__ */ import_react3.default.createElement("p", { className: "name" }, token?.name)));
 };
 var SelectTokenContainer = (props) => {
-  const { themeObject, selectedToken, children, callBackFunc } = props;
-  const [showModal, setShowModal] = (0, import_react3.useState)(false);
+  const { selectedToken, callBackFunc } = props;
   const { loadingTokens, network } = useTokenKitContext();
   const [totalTokens, setTotalTokens] = (0, import_react3.useState)(0);
   const [tokens, setTokens] = (0, import_react3.useState)([]);
@@ -567,6 +576,7 @@ var SelectTokenContainer = (props) => {
     props.closeModal && props.closeModal();
   };
   const loadCommonTokens = async () => {
+    setCommonTokens([]);
     if (network === "SN_SEPOLIA") {
       const common_tks = await db.tokens.filter((t) => (t.common ?? false) && (t.public ?? false)).toArray();
       setCommonTokens(common_tks);
@@ -576,21 +586,15 @@ var SelectTokenContainer = (props) => {
     }
   };
   const sortTokens = (tokens_to_sort) => {
-    return tokens_to_sort.sort((a, b) => {
-      if (a.verified && a.common && !b.verified) {
-        return -1;
-      } else if (a.verified && !a.common && !b.verified) {
-        return -1;
-      } else if (!a.verified && b.verified) {
-        return 1;
-      } else if (!a.verified && !b.verified) {
-        return 1;
-      } else {
-        return a.common ? -1 : 1;
-      }
-    });
+    const _tokens = tokens_to_sort;
+    return _tokens?.sort((a, b) => {
+      const aScore = (a.verified ? 4 : 0) + (a.common ? 2 : 0) + (a.public ? 1 : 0);
+      const bScore = (b.verified ? 4 : 0) + (b.common ? 2 : 0) + (b.public ? 1 : 0);
+      return bScore - aScore;
+    }) ?? [];
   };
   const loadTokensFromDB = async () => {
+    setTokens([]);
     const _totalTokens = await db.tokens.count();
     setTotalTokens(_totalTokens);
     const limit = tokensPerPage;
@@ -629,33 +633,39 @@ var SelectTokenContainer = (props) => {
   (0, import_react3.useEffect)(() => {
     loadTokensFromDB();
   }, [searchedToken, page, loadingTokens, have_tokens_changed, network]);
-  return /* @__PURE__ */ import_react3.default.createElement("div", { className: "tokenkit-wrapper" }, /* @__PURE__ */ import_react3.default.createElement(
+  return /* @__PURE__ */ import_react3.default.createElement("div", { className: "tokenkit-wrapper" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: `select-container` }, /* @__PURE__ */ import_react3.default.createElement(
     "div",
     {
-      className: props?.custsomClasses ?? `select-container`,
-      onClick: () => {
-        props?.closeModal && props?.closeModal();
-      },
-      style: {
-        "--text-color": themeObject.textColor ?? "black",
-        "--header-footer-bg": themeObject.headerFooterBg ?? "gray",
-        "--bg-color": themeObject.backgroundColor ?? "#fff",
-        "--font-family": themeObject.fontFamily ?? "Helvetica",
-        "--search-bg": themeObject.searchBackground ?? "black",
-        "--search-color": themeObject.searchColor ?? "black",
-        "--search-border-color": themeObject.searchBorderColor ?? "black",
-        "--search-focus-border-color": themeObject.searchFocusBorderColor ?? "black",
-        "--border-radius": themeObject.r ?? "20px",
-        "--primary-color": themeObject.primaryColor ?? "blue"
-      }
+      className: "custom-modal-content",
+      style: { height: `${props?.modalHeight}` },
+      onClick: (e) => e.stopPropagation()
     },
-    /* @__PURE__ */ import_react3.default.createElement("div", { className: "custom-modal-content", style: { height: props?.modalHeight ?? "95dvh" }, onClick: (e) => e.stopPropagation() }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "custom-modal-header" }, /* @__PURE__ */ import_react3.default.createElement("h4", { className: "custom-modal-title" }, "Select Token"), /* @__PURE__ */ import_react3.default.createElement("div", { className: "right" }, /* @__PURE__ */ import_react3.default.createElement("span", { className: "chain-id" }, getNetwork()), /* @__PURE__ */ import_react3.default.createElement("button", { className: "close", onClick: props.closeModal }, /* @__PURE__ */ import_react3.default.createElement(CloseSvg_default, null)))), /* @__PURE__ */ import_react3.default.createElement("div", { className: "custom-modal-body" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "search-common-box" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "custom-search" }, /* @__PURE__ */ import_react3.default.createElement("input", { type: "text", placeholder: "Search by Name, Symbol or Address", className: "custom-search-input", value: searchedToken, onChange: (e) => setSearchedToken(e.target.value) })), /* @__PURE__ */ import_react3.default.createElement("div", { className: "common-tokens" }, /* @__PURE__ */ import_react3.default.createElement("h5", null, "Common Tokens"), /* @__PURE__ */ import_react3.default.createElement("div", { className: "common-tokens-list" }, commonTokens?.length === 0 ? /* @__PURE__ */ import_react3.default.createElement("p", { className: "no-tokens" }, "Common Token(s) Not Found! ", /* @__PURE__ */ import_react3.default.createElement("a", { href: "https://tokenkit-gamma.vercel.app/" }, "List here.")) : null, commonTokens?.map((token, i) => /* @__PURE__ */ import_react3.default.createElement(TokenBtn, { select: selectSingle, key: `token_${i}`, token, selectedToken }))))), /* @__PURE__ */ import_react3.default.createElement("div", { className: "rest-of-tokens" }, tokens?.length === 0 ? /* @__PURE__ */ import_react3.default.createElement("div", { className: "tokens-not-found-holder" }, /* @__PURE__ */ import_react3.default.createElement("p", { className: "no-tokens" }, "Token(s) Not Found! ", /* @__PURE__ */ import_react3.default.createElement("a", { href: "https://tokenkit-gamma.vercel.app/" }, "List here."))) : null, tokens?.map((token, i) => /* @__PURE__ */ import_react3.default.createElement(TokenListItem, { key: `jtoken_item_${i}`, token, select: selectSingle, selectedToken })))), /* @__PURE__ */ import_react3.default.createElement("div", { className: "custom-modal-footer" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "top" }, /* @__PURE__ */ import_react3.default.createElement("a", { href: "https://tokenkit-gamma.vercel.app/list-token" }, "List New Token")), /* @__PURE__ */ import_react3.default.createElement("div", { className: "bottom" }, /* @__PURE__ */ import_react3.default.createElement("p", null, "Want to try Starknet Tokenkit?", /* @__PURE__ */ import_react3.default.createElement("a", { href: "https://tokenkit-gamma.vercel.app" }, "Check it out!")))))
-  ));
+    /* @__PURE__ */ import_react3.default.createElement("div", { className: "custom-modal-header" }, /* @__PURE__ */ import_react3.default.createElement("h4", { className: "custom-modal-title" }, "Select Token"), /* @__PURE__ */ import_react3.default.createElement("div", { className: "right" }, /* @__PURE__ */ import_react3.default.createElement("span", { className: "chain-id" }, getNetwork()), /* @__PURE__ */ import_react3.default.createElement("button", { className: "close", onClick: props.closeModal, type: "button" }, /* @__PURE__ */ import_react3.default.createElement(CloseSvg_default, null)))),
+    /* @__PURE__ */ import_react3.default.createElement("div", { className: "custom-modal-body" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "search-common-box" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "custom-search" }, /* @__PURE__ */ import_react3.default.createElement("input", { type: "text", placeholder: "Search by Name, Symbol or Address", className: "custom-search-input", value: searchedToken, onChange: (e) => setSearchedToken(e.target.value) })), /* @__PURE__ */ import_react3.default.createElement("div", { className: "common-tokens" }, /* @__PURE__ */ import_react3.default.createElement("h5", null, "Common Tokens"), /* @__PURE__ */ import_react3.default.createElement("div", { className: "common-tokens-list" }, commonTokens?.length === 0 ? /* @__PURE__ */ import_react3.default.createElement("p", { className: "no-tokens" }, "Common Token(s) Not Found! ", /* @__PURE__ */ import_react3.default.createElement("a", { href: "https://tokenkit-gamma.vercel.app/" }, "List here.")) : null, commonTokens?.map((token, i) => /* @__PURE__ */ import_react3.default.createElement(TokenBtn, { select: selectSingle, key: `token_${i}`, token, selectedToken }))))), /* @__PURE__ */ import_react3.default.createElement("div", { className: "rest-of-tokens" }, tokens?.length === 0 ? /* @__PURE__ */ import_react3.default.createElement("div", { className: "tokens-not-found-holder" }, /* @__PURE__ */ import_react3.default.createElement("p", { className: "no-tokens" }, "Token(s) Not Found! ", /* @__PURE__ */ import_react3.default.createElement("a", { href: "https://tokenkit-gamma.vercel.app/" }, "List here."))) : null, tokens?.map((token, i) => /* @__PURE__ */ import_react3.default.createElement(TokenListItem, { key: `jtoken_item_${i}`, token, select: selectSingle, selectedToken })))),
+    /* @__PURE__ */ import_react3.default.createElement("div", { className: "custom-modal-footer" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "top" }, /* @__PURE__ */ import_react3.default.createElement("a", { href: "https://tokenkit-gamma.vercel.app/list-token" }, "List New Token")), /* @__PURE__ */ import_react3.default.createElement("div", { className: "bottom" }, /* @__PURE__ */ import_react3.default.createElement("p", null, "Want to try Starknet Tokenkit?", /* @__PURE__ */ import_react3.default.createElement("a", { href: "https://tokenkit-gamma.vercel.app" }, "Check it out!"))))
+  )));
 };
 var SelectTokenModal = (props) => {
-  const { themeObject, children } = props;
-  const [showModal, setShowModal] = (0, import_react3.useState)(false);
-  return /* @__PURE__ */ import_react3.default.createElement("div", { className: "tokenkit-wrapper" }, /* @__PURE__ */ import_react3.default.createElement("div", { onClick: () => setShowModal(true) }, children), /* @__PURE__ */ import_react3.default.createElement(SelectTokenContainer, { ...props, custsomClasses: `custom-modal ${showModal ? "show" : ""}`, closeModal: () => setShowModal(false) }));
+  const { children } = props;
+  const [currentAnimation, setCurrentAnimation] = (0, import_react3.useState)(animationGroups[props.animation ?? "fade"]);
+  const modalRef = (0, import_react3.useRef)(null);
+  const openTokensModal = () => {
+    if (modalRef.current) {
+      modalRef.current.showModal();
+      modalRef.current.classList.remove(currentAnimation.out);
+      modalRef.current.classList.add(currentAnimation.in);
+    }
+  };
+  const closeTokensModal = () => {
+    if (modalRef.current) {
+      modalRef.current.classList.remove(currentAnimation.in);
+      modalRef.current.classList.add(currentAnimation.out);
+      setTimeout(() => {
+        modalRef.current?.close();
+      }, 100);
+    }
+  };
+  return /* @__PURE__ */ import_react3.default.createElement(import_react3.default.Fragment, null, /* @__PURE__ */ import_react3.default.createElement("div", { className: "tokenkit-wrapper" }, /* @__PURE__ */ import_react3.default.createElement("dialog", { ref: modalRef, className: `tokenkit-dialog ${currentAnimation.in}` }, /* @__PURE__ */ import_react3.default.createElement(SelectTokenContainer, { ...props, closeModal: closeTokensModal })), /* @__PURE__ */ import_react3.default.createElement("div", { onClick: openTokensModal }, children)));
 };
 var Modal_default = SelectTokenModal;
 
@@ -760,6 +770,7 @@ var TokenKitProvider = ({ children, mainnetNodeURL, sepoliaNodeURL, network }) =
         Array.from({ length: totalPages }, (_, index) => loadTokens(index + 1))
       );
       const combinedTokens = allTokens.flat().map((token, i) => {
+        console.log("Token: ", token);
         const formated_token = formatToken(token);
         return {
           id: i + 1,
@@ -864,8 +875,22 @@ var tokenkitprovider_default = TokenKitProvider;
 
 // src/wrapper.tsx
 var TokenKitWrapper = (props) => {
-  const { children, network, mainnetNodeURL, sepoliaNodeURL } = props;
-  return /* @__PURE__ */ import_react5.default.createElement(tokenkitprovider_default, { mainnetNodeURL, sepoliaNodeURL, network }, children);
+  const { children, network, mainnetNodeURL, sepoliaNodeURL, themeObject } = props;
+  return /* @__PURE__ */ import_react5.default.createElement(tokenkitprovider_default, { mainnetNodeURL, sepoliaNodeURL, network }, /* @__PURE__ */ import_react5.default.createElement("style", null, `
+                :root{
+                    --tokenkit-modal-content-height: 95dvh;
+                    --tokenkit-text-color: ${themeObject.textColor ?? "black"};
+                    --tokenkit-header-footer-bg: ${themeObject.headerFooterBg ?? "gray"};
+                    --tokenkit-bg-color: ${themeObject.backgroundColor ?? "#fff"};
+                    --tokenkit-font-family: ${themeObject.fontFamily ?? "Helvetica"};
+                    --tokenkit-search-bg: ${themeObject.searchBackground ?? "black"};
+                    --tokenkit-search-color: ${themeObject.searchColor ?? "black"};
+                    --tokenkit-search-border-color: ${themeObject.searchBorderColor ?? "black"};
+                    --tokenkit-search-focus-border-color: ${themeObject.searchFocusBorderColor ?? "black"};
+                    --tokenkit-border-radius: ${themeObject.r ?? "20px"};
+                    --tokenkit-primary-color: ${themeObject.primaryColor ?? "blue"};
+                }
+                `), children);
 };
 var wrapper_default = TokenKitWrapper;
 
