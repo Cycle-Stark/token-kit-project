@@ -1,6 +1,6 @@
 {
   "name": "starknet-tokenkit",
-  "version": "2.6.6",
+  "version": "2.6.7",
   "description": "Token Kit is a Starknet Chain kit for all tokens. It provides a modal that returns the tokens available in starknet and also has a contract to store all the given tokens. It is easier to integrate to your project lets say a swapping platform.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
