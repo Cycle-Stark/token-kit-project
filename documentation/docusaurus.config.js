@@ -43,6 +43,7 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
+          sidebarCollapsed: false,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // editUrl:
@@ -67,7 +68,6 @@ const config = {
     ({
       // Replace with your project's social card
       image: 'img/landing.png',
-      
       navbar: {
         // title: 'Tokenkit',
         logo: {
