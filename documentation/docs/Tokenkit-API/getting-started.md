@@ -11,7 +11,7 @@ Welcome to the Tokenkit API documentation! This powerful API allows developers t
 
 ### Unlock the Power of StarkNet
 
-StarkNet is revolutionizing the blockchain space with its scalability and efficiency. By leveraging our Tokens API, you can tap into this innovative ecosystem and provide users with real-time insights into their digital assets. Here are a few compelling reasons to integrate our API into your projects:
+Starknet is revolutionizing the blockchain space with its scalability and efficiency. By leveraging our Tokens API, you can tap into this innovative ecosystem and provide users with real-time insights into their digital assets. Here are a few compelling reasons to integrate our API into your projects:
 
 - **Create Dynamic Portfolio Websites**: Easily display a user's token holdings in an interactive and visually appealing manner. With just a few API calls, you can present a comprehensive overview of an account's assets, making it simple for users to track their investments.
 
