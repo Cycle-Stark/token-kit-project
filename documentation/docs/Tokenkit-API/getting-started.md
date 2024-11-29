@@ -5,11 +5,11 @@ title: "Getting Started"
 
 ## Tokenkit API
 
-Welcome to the Tokenkit API documentation! This powerful API allows developers to effortlessly query tokens associated with specific account or contract addresses on StarkNet. Whether you're building a portfolio website, creating a token management tool, or simply exploring the vast landscape of StarkNet assets, our API is designed to streamline your development process and enhance your applications.
+Welcome to the Tokenkit API documentation! This powerful API allows developers to effortlessly query tokens associated with specific account or contract addresses on Starknet. Whether you're building a portfolio website, creating a token management tool, or simply exploring the vast landscape of Starknet assets, our API is designed to streamline your development process and enhance your applications.
 
 ## Why Use the Tokens API?
 
-### Unlock the Power of StarkNet
+### Unlock the Power of Starknet
 
 Starknet is revolutionizing the blockchain space with its scalability and efficiency. By leveraging our Tokens API, you can tap into this innovative ecosystem and provide users with real-time insights into their digital assets. Here are a few compelling reasons to integrate our API into your projects:
 
@@ -37,5 +37,5 @@ To get started with the Tokens API, follow these simple steps:
 
 
 :::tip Remember
-The Tokens API is your gateway to unlocking the full potential of token data on StarkNet. Whether you're building tools for investors or creating engaging applications for users, our API provides the resources you need to succeed. Dive in today and start transforming how users interact with their digital assets!
+The Tokens API is your gateway to unlocking the full potential of token data on Starknet. Whether you're building tools for investors or creating engaging applications for users, our API provides the resources you need to succeed. Dive in today and start transforming how users interact with their digital assets!
 :::
